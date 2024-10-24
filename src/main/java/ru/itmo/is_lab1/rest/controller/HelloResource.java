@@ -6,21 +6,25 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
+import ru.itmo.is_lab1.domain.dao.StudioDAO;
 import ru.itmo.is_lab1.domain.entity.Studio;
+import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
 
 @Path("/hello-world")
 public class HelloResource {
+
     @Inject
-    private Session session;
+    StudioDAO dao;
 
     @GET
     @Produces("application/json")
-    public String hello() {
+    public String hello() throws CanNotSaveEntityException {
         Studio studio = new Studio();
         studio.setAddress("123");
 //        var trans = session.getTransaction();
+        dao.save(studio);
 //        trans.begin();
-        session.persist(studio);
 //        trans.commit();
         return "123";
     }

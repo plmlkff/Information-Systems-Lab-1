@@ -12,12 +12,12 @@ import lombok.Data;
 public class Coordinates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotNull
     @Min(-144)
     private Integer x; //Значение поля должно быть больше -144, Поле не может быть null
 
     @Max(675)
-    private int y; //Максимальное значение поля: 675
+    private Integer y; //Максимальное значение поля: 675
 }

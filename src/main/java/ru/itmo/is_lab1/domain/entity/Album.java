@@ -12,7 +12,7 @@ import lombok.Data;
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column
     @NotNull
@@ -21,5 +21,5 @@ public class Album {
 
     @Column
     @Min(1)
-    private int sales; //Значение поля должно быть больше 0
+    private Integer sales; //Значение поля должно быть больше 0
 }
