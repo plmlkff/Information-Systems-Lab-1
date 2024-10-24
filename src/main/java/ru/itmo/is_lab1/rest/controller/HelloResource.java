@@ -18,11 +18,10 @@ public class HelloResource {
     public String hello() {
         Studio studio = new Studio();
         studio.setAddress("123");
-        var trans = session.getTransaction();
-        trans.begin();
+//        var trans = session.getTransaction();
+//        trans.begin();
         session.persist(studio);
-        trans.commit();
-        session.close();
+//        trans.commit();
         return "123";
     }
 
