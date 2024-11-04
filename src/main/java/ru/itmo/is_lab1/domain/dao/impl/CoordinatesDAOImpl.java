@@ -5,5 +5,8 @@ import ru.itmo.is_lab1.domain.dao.CoordinatesDAO;
 import ru.itmo.is_lab1.domain.entity.Coordinates;
 
 @ApplicationScoped
-public class CoordinatesDAOImpl extends BasicDAOImpl<Coordinates, Integer> implements CoordinatesDAO {
+public class CoordinatesDAOImpl extends AbstractDAOImpl<Coordinates, Integer> implements CoordinatesDAO {
+    public CoordinatesDAOImpl() {
+        super(Coordinates.class);
+    }
 }

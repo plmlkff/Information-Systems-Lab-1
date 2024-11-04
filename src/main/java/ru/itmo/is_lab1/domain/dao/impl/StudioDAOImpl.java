@@ -5,5 +5,8 @@ import ru.itmo.is_lab1.domain.dao.StudioDAO;
 import ru.itmo.is_lab1.domain.entity.Studio;
 
 @ApplicationScoped
-public class StudioDAOImpl extends BasicDAOImpl<Studio, Integer> implements StudioDAO {
+public class StudioDAOImpl extends AbstractDAOImpl<Studio, Integer> implements StudioDAO {
+    public StudioDAOImpl() {
+        super(Studio.class);
+    }
 }
