@@ -11,7 +11,7 @@ public interface AbstractDAO<T, ID> {
 
     void delete(T entity) throws CanNotDeleteEntityException;
 
-    T getById(ID id) throws CanNotGetByIdEntityException;
+    T findById(ID id) throws CanNotGetByIdEntityException;
     
-    List<T> getAll() throws CanNotGetAllEntitiesException;
+    List<T> findAll() throws CanNotGetAllEntitiesException;
 }

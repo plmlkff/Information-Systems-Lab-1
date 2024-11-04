@@ -63,7 +63,7 @@ public class MusicBand {
     @NotNull
     private LocalDateTime establishmentDate;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "musicband_to_studio",
             joinColumns = @JoinColumn(name = "musicband_id"),

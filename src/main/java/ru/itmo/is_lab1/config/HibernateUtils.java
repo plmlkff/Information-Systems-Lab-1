@@ -31,8 +31,10 @@ public class HibernateUtils {
                     setProperty(AvailableSettings.PASS, properties.getProperty(AvailableSettings.PASS))
                     .setProperty(AvailableSettings.SHOW_SQL, properties.getProperty(AvailableSettings.SHOW_SQL))
                     .setProperty(AvailableSettings.HBM2DDL_AUTO, properties.getProperty(AvailableSettings.HBM2DDL_AUTO))
-                    .addAnnotatedClass(Album.class).addAnnotatedClass(Coordinates.class)
-                    .addAnnotatedClass(MusicBand.class).addAnnotatedClass(Studio.class).buildSessionFactory();
+                    .addAnnotatedClass(Album.class)
+                    .addAnnotatedClass(Coordinates.class)
+                    .addAnnotatedClass(MusicBand.class)
+                    .addAnnotatedClass(Studio.class).buildSessionFactory();
             return sessionFactory;
         } catch (IOException ex) {
             System.err.println("Something went wrong");

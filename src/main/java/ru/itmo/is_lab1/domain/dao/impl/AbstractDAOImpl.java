@@ -59,7 +59,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     }
 
     @Override
-    public T getById(ID id) throws CanNotGetByIdEntityException {
+    public T findById(ID id) throws CanNotGetByIdEntityException {
         try{
             return session.get(type, id);
         } catch (RuntimeException e){
@@ -68,7 +68,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     }
 
     @Override
-    public List<T> getAll() throws CanNotGetAllEntitiesException {
+    public List<T> findAll() throws CanNotGetAllEntitiesException {
         try{
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(type);

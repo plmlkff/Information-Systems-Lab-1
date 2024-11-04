@@ -4,29 +4,54 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
-import ru.itmo.is_lab1.domain.dao.StudioDAO;
-import ru.itmo.is_lab1.domain.entity.Studio;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import ru.itmo.is_lab1.domain.entity.*;
 import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
+import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
+import ru.itmo.is_lab1.service.MusicBandService;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static ru.itmo.is_lab1.util.HttpResponse.*;
 
 @Path("/hello-world")
 public class HelloResource {
 
     @Inject
-    StudioDAO dao;
+    MusicBandService musicBandService;
 
     @GET
-    @Produces("application/json")
-    public String hello() throws CanNotSaveEntityException {
-        Studio studio = new Studio();
-        studio.setAddress("123");
-//        var trans = session.getTransaction();
-        dao.save(studio);
-//        trans.begin();
-//        trans.commit();
-        return "123";
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response hello() {
+        MusicBand musicBand = new MusicBand();
+        musicBand.setName("ABC");
+        Coordinates coordinates = new Coordinates();
+        coordinates.setX(1);
+        coordinates.setY(2);
+        musicBand.setCoordinates(coordinates);
+        musicBand.setCreationDate(LocalDate.now());
+        musicBand.setGenre(MusicGenre.JAZZ);
+        musicBand.setNumberOfParticipants(3);
+        musicBand.setSinglesCount(3);
+        musicBand.setDescription("Test");
+        Album album = new Album();
+        album.setName("Lol");
+        album.setSales(5);
+        musicBand.setBestAlbum(album);
+        musicBand.setAlbumsCount(5);
+        musicBand.setEstablishmentDate(LocalDateTime.now());
+        Studio studio1 = new Studio(), studio2 = new Studio();
+        studio1.setAddress("SPB");
+        studio2.setAddress("TLT");
+        musicBand.setStudio(List.of(studio1, studio2));
+        try {
+            return ok(MusicBandDTO.fromDomain(musicBandService.save(musicBand)));
+        } catch (CanNotSaveEntityException e){
+            return error(e.getMessage());
+        }
     }
 
 }

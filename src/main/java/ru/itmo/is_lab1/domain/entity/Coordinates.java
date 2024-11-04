@@ -14,10 +14,12 @@ public class Coordinates {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column
     @NotNull
     @Min(-144)
     private Integer x; //Значение поля должно быть больше -144, Поле не может быть null
 
+    @Column
     @Max(675)
     private Integer y; //Максимальное значение поля: 675
 }
