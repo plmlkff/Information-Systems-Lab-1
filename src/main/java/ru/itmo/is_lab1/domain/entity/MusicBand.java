@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,6 +70,12 @@ public class MusicBand {
             joinColumns = @JoinColumn(name = "musicband_id"),
             inverseJoinColumns = @JoinColumn(name = "studio_id")
     )
+
     @NotNull
     private List<Studio> studio; //Поле не может быть null
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "owner_login")
+    private User owner;
 }

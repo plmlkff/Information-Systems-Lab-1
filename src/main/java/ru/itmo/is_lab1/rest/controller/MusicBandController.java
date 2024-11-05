@@ -14,13 +14,13 @@ import ru.itmo.is_lab1.service.MusicBandService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
 
-@Path("/domain")
-public class DomainController {
+@Path("/musicband/domain")
+public class MusicBandController {
     @Inject
     private MusicBandService musicBandService;
 
     @GET
-    @Path("/musicband/all")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllMusicBands(){
         try {
@@ -33,7 +33,7 @@ public class DomainController {
     }
 
     @POST
-    @Path("/musicband/create")
+    @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMusicBand(@Valid MusicBandDTO musicBandDTO){
@@ -47,7 +47,7 @@ public class DomainController {
     }
 
     @GET
-    @Path("/musicband/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") Integer id){
         try{

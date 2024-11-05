@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
-import ru.itmo.is_lab1.domain.entity.Album;
-import ru.itmo.is_lab1.domain.entity.Coordinates;
-import ru.itmo.is_lab1.domain.entity.MusicBand;
-import ru.itmo.is_lab1.domain.entity.Studio;
+import ru.itmo.is_lab1.domain.entity.*;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -34,7 +31,8 @@ public class HibernateUtils {
                     .addAnnotatedClass(Album.class)
                     .addAnnotatedClass(Coordinates.class)
                     .addAnnotatedClass(MusicBand.class)
-                    .addAnnotatedClass(Studio.class).buildSessionFactory();
+                    .addAnnotatedClass(Studio.class)
+                    .addAnnotatedClass(User.class).buildSessionFactory();
             return sessionFactory;
         } catch (IOException ex) {
             System.err.println("Something went wrong");
