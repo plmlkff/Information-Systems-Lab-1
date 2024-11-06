@@ -16,20 +16,20 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
 
     private final Class<T> type;
 
-    public AbstractDAOImpl(Class<T> type){
+    public AbstractDAOImpl(Class<T> type) {
         this.type = type;
     }
 
     @Override
     public T save(T entity) throws CanNotSaveEntityException {
         var trans = session.getTransaction();
-        try{
+        try {
             trans.begin();
             session.persist(entity);
-            trans.commit();
             session.refresh(entity);
+            trans.commit();
             return entity;
-        } catch (Throwable e){
+        } catch (Throwable e) {
             trans.rollback();
             throw new CanNotSaveEntityException(e.getMessage());
         }
@@ -37,10 +37,10 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
 
     @Override
     public T refresh(T entity) throws CanNotRefreshEntityException {
-        try{
+        try {
             session.refresh(entity);
             return entity;
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new CanNotRefreshEntityException(e.getMessage());
         }
     }
@@ -48,11 +48,11 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     @Override
     public void delete(T entity) throws CanNotDeleteEntityException {
         var trans = session.getTransaction();
-        try{
+        try {
             trans.begin();
             session.remove(entity);
             trans.commit();
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             trans.rollback();
             throw new CanNotDeleteEntityException(e.getMessage());
         }
@@ -60,21 +60,21 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
 
     @Override
     public T findById(ID id) throws CanNotGetByIdEntityException {
-        try{
+        try {
             return session.get(type, id);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new CanNotGetByIdEntityException(e.getMessage());
         }
     }
 
     @Override
     public List<T> findAll() throws CanNotGetAllEntitiesException {
-        try{
+        try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(type);
             query.from(type);
             return session.createQuery(query).getResultList();
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new CanNotGetAllEntitiesException(e.getMessage());
         }
     }

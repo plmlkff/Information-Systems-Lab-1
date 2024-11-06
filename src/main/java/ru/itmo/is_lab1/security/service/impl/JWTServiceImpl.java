@@ -22,9 +22,9 @@ public class JWTServiceImpl implements JWTService {
     @Override
     public boolean verify(String token) {
         try{
-            getUsername(token);
+            jwtUtil.verifyToken(token);
             return true;
-        } catch (JwtException e){
+        } catch (Exception e){
             return false;
         }
     }

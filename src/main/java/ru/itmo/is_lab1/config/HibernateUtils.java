@@ -1,7 +1,9 @@
 package ru.itmo.is_lab1.config;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
@@ -13,9 +15,12 @@ import java.util.Properties;
 
 @ApplicationScoped
 public class HibernateUtils {
+    private SessionFactory sessionFactory;
+
     @Produces
+    @Dependent
     public Session createSession(){
-        var sessionFactory = buildSessionFactory();
+        if (sessionFactory == null) sessionFactory = buildSessionFactory();
         return sessionFactory == null ? null : sessionFactory.openSession();
     }
 

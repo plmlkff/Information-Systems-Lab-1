@@ -64,13 +64,12 @@ public class MusicBand {
     @NotNull
     private LocalDateTime establishmentDate;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "musicband_to_studio",
             joinColumns = @JoinColumn(name = "musicband_id"),
             inverseJoinColumns = @JoinColumn(name = "studio_id")
     )
-
     @NotNull
     private List<Studio> studio; //Поле не может быть null
 

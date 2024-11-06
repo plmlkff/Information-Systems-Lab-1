@@ -1,8 +1,10 @@
 package ru.itmo.is_lab1.rest.controller;
 
 import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
@@ -14,7 +16,7 @@ import ru.itmo.is_lab1.service.MusicBandService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
 
-@Path("/musicband/domain")
+@Path("/domain/musicband")
 public class MusicBandController {
     @Inject
     private MusicBandService musicBandService;
