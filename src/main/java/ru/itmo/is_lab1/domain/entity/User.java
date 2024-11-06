@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.List;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "person")
 @Data
 public class User {
     @Id
@@ -22,7 +22,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(name = "is_approved")
+    private boolean isApproved;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MusicBand> musicBands;
+
+    private String token;
 }

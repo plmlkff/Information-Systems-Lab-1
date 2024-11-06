@@ -7,7 +7,7 @@ import ru.itmo.is_lab1.util.JwtUtil;
 
 @ApplicationScoped
 public class JWTServiceImpl implements JWTService {
-    private JwtUtil jwtUtil = jwtUtil = new JwtUtil();
+    private final JwtUtil jwtUtil = new JwtUtil();
 
     @Override
     public String create(String username) {

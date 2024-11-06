@@ -26,8 +26,8 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         try {
             trans.begin();
             session.persist(entity);
-            session.refresh(entity);
             trans.commit();
+            session.refresh(entity);
             return entity;
         } catch (Throwable e) {
             trans.rollback();

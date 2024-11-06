@@ -23,6 +23,7 @@ public class UserDTO {
     private List<MusicBandDTO> musicBands;
 
     public static UserDTO fromDomain(User user){
+        if (user == null) return null;
         UserDTO userDTO = new UserDTO();
         userDTO.setLogin(user.getLogin());
         userDTO.setPassword(user.getPassword());
@@ -32,6 +33,7 @@ public class UserDTO {
     }
 
     public static User toDomain(UserDTO userDTO){
+        if (userDTO == null) return null;
         User user = new User();
         user.setLogin(userDTO.getLogin());
         user.setPassword(userDTO.getPassword());

@@ -4,11 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
-import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
 import ru.itmo.is_lab1.service.MusicBandService;
 
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.List;
 public class MusicBandServiceImpl implements MusicBandService {
     @Inject
     private MusicBandDAO musicBandDAO;
-
 
     @Override
     public List<MusicBand> getAll() throws CanNotGetAllEntitiesException {
@@ -29,7 +26,6 @@ public class MusicBandServiceImpl implements MusicBandService {
         return musicBandDAO.save(musicBand);
     }
 
-    @WithPrivileges({UserRole.USER, UserRole.ADMIN})
     @Override
     public MusicBand getById(Integer id) throws CanNotGetByIdEntityException {
         return musicBandDAO.findById(id);

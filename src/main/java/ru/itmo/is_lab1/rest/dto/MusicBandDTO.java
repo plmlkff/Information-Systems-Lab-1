@@ -50,6 +50,8 @@ public class MusicBandDTO {
 
     @NotNull
     private List<StudioDTO> studio; //Поле не может быть null
+
+    private String ownerLogin;
     
     public static MusicBandDTO fromDomain(MusicBand musicBand){
         if (musicBand == null) return null;
@@ -66,6 +68,7 @@ public class MusicBandDTO {
         musicBandDTO.setAlbumsCount(musicBand.getAlbumsCount());
         musicBandDTO.setEstablishmentDate(musicBand.getEstablishmentDate().toEpochSecond(ZoneOffset.UTC));
         musicBandDTO.setStudio(musicBand.getStudio().stream().map(StudioDTO::fromDomain).toList());
+        musicBandDTO.setOwnerLogin(musicBand.getOwner() == null ? null : musicBand.getOwner().getLogin());
         return musicBandDTO;
     }
 
