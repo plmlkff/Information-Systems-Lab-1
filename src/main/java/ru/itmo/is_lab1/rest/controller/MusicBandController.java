@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
+import ru.itmo.is_lab1.exceptions.domain.CanNotDeleteEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
@@ -31,6 +32,18 @@ public class MusicBandController {
             var bandDTOs = bands.stream().map(MusicBandDTO::fromDomain).toList();
             return ok(bandDTOs);
         } catch (CanNotGetAllEntitiesException e) {
+            return error(e.getMessage());
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteMusicBand(@PathParam("id") Integer id, @Context HttpServletRequest request){
+        try{
+            String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
+            musicBandService.deleteById(id, login);
+            return ok(id);
+        } catch (CanNotDeleteEntityException e) {
             return error(e.getMessage());
         }
     }

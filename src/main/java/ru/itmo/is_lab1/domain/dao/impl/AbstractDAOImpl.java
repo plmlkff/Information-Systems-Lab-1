@@ -61,7 +61,9 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     @Override
     public T findById(ID id) throws CanNotGetByIdEntityException {
         try {
-            return session.get(type, id);
+            var entity = session.get(type, id);
+            if (entity == null) throw new CanNotGetByIdEntityException();
+            return entity;
         } catch (RuntimeException e) {
             throw new CanNotGetByIdEntityException(e.getMessage());
         }

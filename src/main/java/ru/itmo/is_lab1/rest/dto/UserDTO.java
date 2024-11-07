@@ -3,7 +3,6 @@ package ru.itmo.is_lab1.rest.dto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.domain.entity.UserRole;
 

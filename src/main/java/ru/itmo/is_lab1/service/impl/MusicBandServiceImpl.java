@@ -6,6 +6,7 @@ import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
 import ru.itmo.is_lab1.domain.dao.UserDAO;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.entity.User;
+import ru.itmo.is_lab1.exceptions.domain.CanNotDeleteEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
@@ -19,6 +20,19 @@ public class MusicBandServiceImpl implements MusicBandService {
     private MusicBandDAO musicBandDAO;
     @Inject
     private UserDAO userDAO;
+
+    @Override
+    public void deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
+        try {
+            MusicBand musicBand = musicBandDAO.findById(id);
+            if (!musicBand.getOwner().getLogin().equals(userLogin)) {
+                throw new CanNotDeleteEntityException("Permissions denied!");
+            }
+            musicBandDAO.delete(musicBand);
+        } catch (CanNotGetByIdEntityException e) {
+            throw new CanNotDeleteEntityException("ID does not exist");
+        }
+    }
 
     @Override
     public List<MusicBand> getAll() throws CanNotGetAllEntitiesException {
