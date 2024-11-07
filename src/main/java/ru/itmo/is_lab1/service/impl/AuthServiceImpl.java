@@ -10,6 +10,7 @@ import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
 import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.exceptions.util.CanNotCreateHashException;
+import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
 import ru.itmo.is_lab1.security.service.JWTService;
 import ru.itmo.is_lab1.service.AuthService;
 import ru.itmo.is_lab1.util.SHA512HashUtil;
@@ -28,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
             if (user == null) throw new CanNotAuthUserException("User does not exist");
             if (!user.isApproved()) throw new CanNotAuthUserException("User is not approved!");
             password = SHA512HashUtil.hash(password);
-            if (!user.getPassword().equals(password)) throw new CanNotAuthUserException();
+            if (!user.getPassword().equals(password)) throw new CanNotAuthUserException("Wrong password!");
             user.setToken(jwtService.create(login));
             return user;
         } catch (CanNotCreateHashException | CanNotGetByIdEntityException e) {

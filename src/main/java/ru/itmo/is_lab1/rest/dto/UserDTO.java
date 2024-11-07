@@ -26,7 +26,6 @@ public class UserDTO {
         if (user == null) return null;
         UserDTO userDTO = new UserDTO();
         userDTO.setLogin(user.getLogin());
-        userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         userDTO.setMusicBands(user.getMusicBands().stream().map(MusicBandDTO::fromDomain).toList());
         return userDTO;

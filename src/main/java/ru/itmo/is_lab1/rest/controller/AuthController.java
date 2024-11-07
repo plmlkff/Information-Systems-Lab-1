@@ -12,6 +12,7 @@ import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.rest.dto.AuthDTO;
+import ru.itmo.is_lab1.rest.dto.UserDTO;
 import ru.itmo.is_lab1.service.AuthService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
@@ -28,9 +29,7 @@ public class AuthController {
     public Response auth(@Valid AuthDTO authDTO){
         try {
             User user = authService.auth(authDTO.getLogin(), authDTO.getPassword());
-            authDTO.setToken(user.getToken());
-            authDTO.setRole(user.getRole());
-            return ok(authDTO);
+            return ok(UserDTO.fromDomain(user));
         } catch (CanNotAuthUserException e) {
             return error(Response.Status.UNAUTHORIZED, e.getMessage());
         }
@@ -43,9 +42,7 @@ public class AuthController {
     public Response signUp(@Valid AuthDTO authDTO){
         try {
             User user = authService.signUp(authDTO.getLogin(), authDTO.getPassword(), authDTO.getRole());
-            authDTO.setToken(user.getToken());
-            authDTO.setRole(user.getRole());
-            return ok(authDTO);
+            return ok(UserDTO.fromDomain(user));
         } catch (CanNotSignUpUserException e) {
             return error(Response.Status.UNAUTHORIZED, e.getMessage());
         }

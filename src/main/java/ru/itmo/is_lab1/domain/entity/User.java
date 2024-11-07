@@ -29,5 +29,6 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MusicBand> musicBands;
 
+    @Transient
     private String token;
 }
