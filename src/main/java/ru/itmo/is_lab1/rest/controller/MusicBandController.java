@@ -23,7 +23,7 @@ public class MusicBandController {
     private MusicBandService musicBandService;
 
     @GET
-    @Path("/all")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllMusicBands(){
         try {

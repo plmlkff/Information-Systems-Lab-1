@@ -72,6 +72,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(type);
+            query.from(type);
             return session.createQuery(query).getResultList();
         } catch (RuntimeException e) {
             throw new CanNotGetAllEntitiesException(e.getMessage());
