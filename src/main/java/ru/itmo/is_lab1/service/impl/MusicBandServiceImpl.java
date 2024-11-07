@@ -2,17 +2,19 @@ package ru.itmo.is_lab1.service.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.hibernate.Session;
 import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
+import ru.itmo.is_lab1.domain.dao.StudioDAO;
 import ru.itmo.is_lab1.domain.dao.UserDAO;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
+import ru.itmo.is_lab1.domain.entity.Studio;
 import ru.itmo.is_lab1.domain.entity.User;
-import ru.itmo.is_lab1.exceptions.domain.CanNotDeleteEntityException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
+import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.service.MusicBandService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class MusicBandServiceImpl implements MusicBandService {
@@ -20,17 +22,38 @@ public class MusicBandServiceImpl implements MusicBandService {
     private MusicBandDAO musicBandDAO;
     @Inject
     private UserDAO userDAO;
+    @Inject
+    private StudioDAO studioDAO;
 
     @Override
     public void deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(id);
+            if (musicBand == null) throw new CanNotGetByIdEntityException();
             if (!musicBand.getOwner().getLogin().equals(userLogin)) {
                 throw new CanNotDeleteEntityException("Permissions denied!");
             }
             musicBandDAO.delete(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotDeleteEntityException("ID does not exist");
+        }
+    }
+
+    @Override
+    public MusicBand updateById(MusicBand newMusicBand, String userLogin) throws CanNotUpdateEntityException {
+        try {
+            MusicBand musicBand = musicBandDAO.findById(newMusicBand.getId());
+            if (musicBand == null) throw new CanNotGetByIdEntityException();
+            if (!musicBand.getOwner().getLogin().equals(userLogin)) {
+                throw new CanNotUpdateEntityException("Permissions denied!");
+            }
+            musicBand.merge(newMusicBand);
+            musicBand.setStudio(replaceAlreadyExistStudios(newMusicBand.getStudio()));
+            return musicBandDAO.save(musicBand);
+        } catch (CanNotGetByIdEntityException e) {
+            throw new CanNotUpdateEntityException("ID does not exist");
+        } catch (CanNotSaveEntityException e) {
+            throw new CanNotUpdateEntityException("Can not save entity!");
         }
     }
 
@@ -42,12 +65,28 @@ public class MusicBandServiceImpl implements MusicBandService {
     @Override
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
         try {
+            if (musicBand.getId() != null) throw new CanNotSaveEntityException("Id must be null!");
             User owner = userDAO.findById(ownerLogin);
+            if (owner == null) throw new CanNotGetByIdEntityException();
             musicBand.setOwner(owner);
+            musicBand.setStudio(replaceAlreadyExistStudios(musicBand.getStudio()));
             return musicBandDAO.save(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotSaveEntityException("User not found!");
         }
+    }
+
+    private Set<Studio> replaceAlreadyExistStudios(Set<Studio> studios){
+        Set<Studio> replacedSet = new HashSet<>();
+        for (var studio : studios){
+            try{
+                var dbStudio = studioDAO.findByAddress(studio.getAddress());
+                replacedSet.add(dbStudio == null ? studio : dbStudio);
+            } catch (CanNotGetStudioByAddressException e) {
+                replacedSet.add(studio);
+            }
+        }
+        return replacedSet;
     }
 
     @Override

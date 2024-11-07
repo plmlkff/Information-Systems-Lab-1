@@ -18,7 +18,7 @@ public class HibernateUtils {
     private SessionFactory sessionFactory;
 
     @Produces
-    @Dependent
+    @ApplicationScoped
     public Session createSession(){
         if (sessionFactory == null) sessionFactory = buildSessionFactory();
         return sessionFactory == null ? null : sessionFactory.openSession();

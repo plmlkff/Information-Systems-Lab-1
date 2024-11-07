@@ -10,7 +10,6 @@ import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
 import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.exceptions.util.CanNotCreateHashException;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
 import ru.itmo.is_lab1.security.service.JWTService;
 import ru.itmo.is_lab1.service.AuthService;
 import ru.itmo.is_lab1.util.SHA512HashUtil;
@@ -28,6 +27,8 @@ public class AuthServiceImpl implements AuthService {
             User user = userDAO.findById(login);
             if (user == null) throw new CanNotAuthUserException("User does not exist");
             if (!user.isApproved()) throw new CanNotAuthUserException("User is not approved!");
+            if (password == null || password.isEmpty()) throw new CanNotAuthUserException("Password must not be empty!");
+
             password = SHA512HashUtil.hash(password);
             if (!user.getPassword().equals(password)) throw new CanNotAuthUserException("Wrong password!");
             user.setToken(jwtService.create(login));
@@ -44,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
             if (userDAO.findById(login) != null) throw new CanNotSignUpUserException("Login already exist");
             if (password == null || password.isEmpty()) throw new CanNotSignUpUserException("Password must not be empty!");
             if (role == null) throw new CanNotSignUpUserException("Role must not be null!");
+
             password = SHA512HashUtil.hash(password);
             User user = new User();
             user.setLogin(login);
@@ -51,6 +53,7 @@ public class AuthServiceImpl implements AuthService {
             user.setRole(role);
             user.setApproved(!UserRole.ADMIN.equals(role));
             userDAO.save(user);
+
             if (UserRole.ADMIN.equals(role)) throw new CanNotSignUpUserException("Wait another admin approve!");
             user.setToken(jwtService.create(login));
             return user;

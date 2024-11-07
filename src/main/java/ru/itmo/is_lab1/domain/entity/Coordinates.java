@@ -22,4 +22,9 @@ public class Coordinates {
     @Column
     @Max(675)
     private Integer y; //Максимальное значение поля: 675
+
+    public void merge(Coordinates newCoordinates){
+        x = newCoordinates.getX();
+        y = newCoordinates.getY();
+    }
 }

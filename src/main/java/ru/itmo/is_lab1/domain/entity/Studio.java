@@ -12,7 +12,11 @@ public class Studio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(unique = true)
     @NotNull
     private String address; //Поле не может быть null
+
+    public interface Columns{
+        String ADDRESS = "address";
+    }
 }

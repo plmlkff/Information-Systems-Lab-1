@@ -33,7 +33,7 @@ create table musicband_to_studio
 create table studio
 (
     id      serial primary key,
-    address varchar(255) not null
+    address varchar(255) not null unique
 );
 create table person
 (

@@ -8,10 +8,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
-import ru.itmo.is_lab1.exceptions.domain.CanNotDeleteEntityException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
-import ru.itmo.is_lab1.exceptions.domain.CanNotSaveEntityException;
+import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
 import ru.itmo.is_lab1.service.MusicBandService;
@@ -38,12 +35,27 @@ public class MusicBandController {
 
     @DELETE
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteMusicBand(@PathParam("id") Integer id, @Context HttpServletRequest request){
         try{
             String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
             musicBandService.deleteById(id, login);
             return ok(id);
         } catch (CanNotDeleteEntityException e) {
+            return error(e.getMessage());
+        }
+    }
+
+    @PATCH
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateMusicBand(MusicBandDTO musicBandDTO, @PathParam("id") Integer id, @Context HttpServletRequest request){
+        try{
+            String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
+            MusicBand musicBand = musicBandService.updateById(MusicBandDTO.toDomain(musicBandDTO), login);
+            return ok(MusicBandDTO.fromDomain(musicBand));
+        } catch (CanNotUpdateEntityException e) {
             return error(e.getMessage());
         }
     }

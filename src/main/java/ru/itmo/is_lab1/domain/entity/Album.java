@@ -22,4 +22,9 @@ public class Album {
     @Column
     @Min(1)
     private Integer sales; //Значение поля должно быть больше 0
+
+    public void merge(Album newAlbum){
+        name = newAlbum.getName();
+        sales = newAlbum.getSales();
+    }
 }

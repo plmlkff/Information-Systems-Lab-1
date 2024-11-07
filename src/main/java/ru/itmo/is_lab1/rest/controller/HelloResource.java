@@ -15,6 +15,7 @@ import ru.itmo.is_lab1.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
 
@@ -55,7 +56,7 @@ public class HelloResource {
         Studio studio1 = new Studio(), studio2 = new Studio();
         studio1.setAddress("SPB");
         studio2.setAddress("TLT");
-        musicBand.setStudio(List.of(studio1, studio2));
+        musicBand.setStudio(Set.of(studio1, studio2));
 
         musicBand.setOwner(user);
         user.setMusicBands(List.of(musicBand));

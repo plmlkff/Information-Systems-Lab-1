@@ -10,6 +10,7 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "music_band")
@@ -64,17 +65,30 @@ public class MusicBand {
     @NotNull
     private LocalDateTime establishmentDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "musicband_to_studio",
             joinColumns = @JoinColumn(name = "musicband_id"),
             inverseJoinColumns = @JoinColumn(name = "studio_id")
     )
     @NotNull
-    private List<Studio> studio; //Поле не может быть null
+    private Set<Studio> studio; //Поле не может быть null
 
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "owner_login")
     private User owner;
+
+    public void merge(MusicBand newMusicBand){
+        name = newMusicBand.getName();
+        coordinates.merge(newMusicBand.getCoordinates());
+        creationDate = newMusicBand.getCreationDate();
+        genre = newMusicBand.getGenre();
+        numberOfParticipants = newMusicBand.getNumberOfParticipants();
+        singlesCount = newMusicBand.getSinglesCount();
+        description = newMusicBand.getDescription();
+        bestAlbum.merge(newMusicBand.getBestAlbum());
+        albumsCount = newMusicBand.getAlbumsCount();
+        establishmentDate = newMusicBand.getEstablishmentDate();
+    }
 }
