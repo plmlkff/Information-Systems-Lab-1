@@ -22,12 +22,15 @@ public class UserDTO {
 
     private List<MusicBandDTO> musicBands;
 
+    private String token;
+
     public static UserDTO fromDomain(User user){
         if (user == null) return null;
         UserDTO userDTO = new UserDTO();
         userDTO.setLogin(user.getLogin());
         userDTO.setRole(user.getRole());
         userDTO.setMusicBands(user.getMusicBands().stream().map(MusicBandDTO::fromDomain).toList());
+        userDTO.setToken(user.getToken());
         return userDTO;
     }
 
@@ -38,6 +41,7 @@ public class UserDTO {
         user.setPassword(userDTO.getPassword());
         user.setRole(userDTO.getRole());
         user.setMusicBands(userDTO.getMusicBands().stream().map(MusicBandDTO::toDomain).toList());
+        user.setToken(userDTO.getToken());
         return user;
     }
 }
