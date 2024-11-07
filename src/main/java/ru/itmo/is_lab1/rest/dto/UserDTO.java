@@ -19,8 +19,6 @@ public class UserDTO {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private List<MusicBandDTO> musicBands;
-
     private String token;
 
     public static UserDTO fromDomain(User user){
@@ -28,7 +26,6 @@ public class UserDTO {
         UserDTO userDTO = new UserDTO();
         userDTO.setLogin(user.getLogin());
         userDTO.setRole(user.getRole());
-        userDTO.setMusicBands(user.getMusicBands().stream().map(MusicBandDTO::fromDomain).toList());
         userDTO.setToken(user.getToken());
         return userDTO;
     }
@@ -39,7 +36,6 @@ public class UserDTO {
         user.setLogin(userDTO.getLogin());
         user.setPassword(userDTO.getPassword());
         user.setRole(userDTO.getRole());
-        user.setMusicBands(userDTO.getMusicBands().stream().map(MusicBandDTO::toDomain).toList());
         user.setToken(userDTO.getToken());
         return user;
     }

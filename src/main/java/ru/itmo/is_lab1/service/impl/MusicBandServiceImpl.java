@@ -91,6 +91,8 @@ public class MusicBandServiceImpl implements MusicBandService {
 
     @Override
     public MusicBand getById(Integer id) throws CanNotGetByIdEntityException {
-        return musicBandDAO.findById(id);
+        var musicBand = musicBandDAO.findById(id);
+        if (musicBand == null) throw new CanNotGetByIdEntityException("ID does not exist!");
+        return musicBand;
     }
 }
