@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
+import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
@@ -26,6 +27,19 @@ public class MusicBandController {
     public Response getAllMusicBands(){
         try {
             var bands = musicBandService.getAll();
+            var bandDTOs = bands.stream().map(MusicBandDTO::fromDomain).toList();
+            return ok(bandDTOs);
+        } catch (CanNotGetAllEntitiesException e) {
+            return error(e.getMessage());
+        }
+    }
+
+    @POST
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllMusicBands(QueryFilter queryFilter){
+        try {
+            var bands = musicBandService.getAll(queryFilter);
             var bandDTOs = bands.stream().map(MusicBandDTO::fromDomain).toList();
             return ok(bandDTOs);
         } catch (CanNotGetAllEntitiesException e) {

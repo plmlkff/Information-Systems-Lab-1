@@ -9,6 +9,7 @@ import ru.itmo.is_lab1.domain.dao.UserDAO;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.entity.Studio;
 import ru.itmo.is_lab1.domain.entity.User;
+import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.service.MusicBandService;
 
@@ -60,6 +61,11 @@ public class MusicBandServiceImpl implements MusicBandService {
     @Override
     public List<MusicBand> getAll() throws CanNotGetAllEntitiesException {
         return musicBandDAO.findAll();
+    }
+
+    @Override
+    public List<MusicBand> getAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException {
+        return musicBandDAO.findAll(queryFilter);
     }
 
     @Override

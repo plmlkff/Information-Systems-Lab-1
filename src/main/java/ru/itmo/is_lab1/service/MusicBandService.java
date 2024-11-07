@@ -1,6 +1,7 @@
 package ru.itmo.is_lab1.service;
 
 import ru.itmo.is_lab1.domain.entity.MusicBand;
+import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface MusicBandService {
     void deleteById(Integer id, String ownerLogin) throws CanNotDeleteEntityException;
 
     List<MusicBand> getAll() throws CanNotGetAllEntitiesException;
+
+    List<MusicBand> getAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;
 
     MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException;
 

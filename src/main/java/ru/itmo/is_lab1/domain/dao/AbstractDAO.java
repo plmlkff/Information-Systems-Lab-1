@@ -1,5 +1,6 @@
 package ru.itmo.is_lab1.domain.dao;
 
+import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 
 import java.util.List;
