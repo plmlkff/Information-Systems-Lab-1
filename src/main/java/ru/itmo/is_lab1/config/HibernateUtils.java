@@ -28,8 +28,8 @@ public class HibernateUtils {
         try {
             Properties properties = new Properties();
             properties.load(HibernateUtils.class.getClassLoader().getResourceAsStream("/hibernate.cfg.properties"));
-            SessionFactory sessionFactory = new Configuration().configure().setProperty(AvailableSettings.USER, properties.getProperty(AvailableSettings.USER)).
-                    setProperty(AvailableSettings.PASS, properties.getProperty(AvailableSettings.PASS))
+            SessionFactory sessionFactory = new Configuration().configure().setProperty(AvailableSettings.USER, properties.getProperty(AvailableSettings.USER))
+                    .setProperty(AvailableSettings.PASS, properties.getProperty(AvailableSettings.PASS))
                     .setProperty(AvailableSettings.SHOW_SQL, properties.getProperty(AvailableSettings.SHOW_SQL))
                     .setProperty(AvailableSettings.HBM2DDL_AUTO, properties.getProperty(AvailableSettings.HBM2DDL_AUTO))
                     .addAnnotatedClass(Album.class)
