@@ -21,23 +21,10 @@ public class MusicBandController {
     @Inject
     private MusicBandService musicBandService;
 
-    @GET
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllMusicBands(){
-        try {
-            var bands = musicBandService.getAll();
-            var bandDTOs = bands.stream().map(MusicBandDTO::fromDomain).toList();
-            return ok(bandDTOs);
-        } catch (CanNotGetAllEntitiesException e) {
-            return error(e.getMessage());
-        }
-    }
-
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllMusicBands(QueryFilter queryFilter){
+    public Response getAllMusicBands(@Valid QueryFilter queryFilter){
         try {
             var bands = musicBandService.getAll(queryFilter);
             var bandDTOs = bands.stream().map(MusicBandDTO::fromDomain).toList();

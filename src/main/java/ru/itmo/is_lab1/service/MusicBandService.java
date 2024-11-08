@@ -11,6 +11,7 @@ public interface MusicBandService {
 
     void deleteById(Integer id, String ownerLogin) throws CanNotDeleteEntityException;
 
+    @Deprecated
     List<MusicBand> getAll() throws CanNotGetAllEntitiesException;
 
     List<MusicBand> getAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;

@@ -91,4 +91,11 @@ public class MusicBand {
         albumsCount = newMusicBand.getAlbumsCount();
         establishmentDate = newMusicBand.getEstablishmentDate();
     }
+
+    public interface Attributes{
+        String COORDINATES = "coordinates";
+        String BEST_ALBUM = "bestAlbum";
+        String STUDIO = "studio";
+        String OWNER = "owner";
+    }
 }

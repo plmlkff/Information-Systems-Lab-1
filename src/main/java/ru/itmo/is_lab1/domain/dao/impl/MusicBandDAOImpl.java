@@ -29,16 +29,21 @@ public class MusicBandDAOImpl extends AbstractDAOImpl<MusicBand, Integer> implem
     public List<MusicBand> findAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException {
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+
             CriteriaQuery<MusicBand> query = criteriaBuilder.createQuery(MusicBand.class);
             Root<MusicBand> rootQuery = query.from(MusicBand.class);
+
             Predicate predicate = joinPredicates(criteriaBuilder, rootQuery, queryFilter.getCriteria());
             query.where(predicate);
+
             makeOrderBy(query, rootQuery, queryFilter, criteriaBuilder);
+
             var sessionQuery = session.createQuery(query);
             makePagination(sessionQuery, queryFilter.getPageNumber(), queryFilter.getPageSize());
+
             return sessionQuery.getResultList();
         } catch (Throwable e){
-            throw new CanNotGetAllEntitiesException(e.getMessage());
+            throw new CanNotGetAllEntitiesException("Ошибка при выполнении запроса к базе!");
         }
     }
 
