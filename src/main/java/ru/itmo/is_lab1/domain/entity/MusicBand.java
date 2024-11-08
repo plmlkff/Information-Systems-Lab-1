@@ -40,7 +40,6 @@ public class MusicBand {
     private MusicGenre genre; //Поле может быть null
 
     @Column(name = "number_of_participants")
-    @NotNull
     private Integer numberOfParticipants; //Поле может быть null, Значение поля должно быть больше 0
 
     @Column(name = "singles_count")

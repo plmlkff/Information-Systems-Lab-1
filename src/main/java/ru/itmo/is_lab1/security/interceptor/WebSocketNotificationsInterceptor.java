@@ -15,8 +15,8 @@ public class WebSocketNotificationsInterceptor {
 
     @AroundInvoke
     public Object checkMethod(InvocationContext context) throws Exception {
+        Object res = context.proceed();
         try {
-            Object res = context.proceed();
             Class<?>[] webSocketClasses = context.getMethod().getAnnotation(WithWebsocketNotification.class).value();
             String message = context.getMethod().getAnnotation(WithWebsocketNotification.class).message();
             for (var webSocketClass : webSocketClasses){

@@ -31,7 +31,7 @@ public class MusicBandDTO {
     @NotNull
     private MusicGenre genre; //Поле может быть null
 
-    @NotNull
+    @Min(1)
     private Integer numberOfParticipants; //Поле может быть null, Значение поля должно быть больше 0
 
     @NotNull

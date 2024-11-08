@@ -19,7 +19,7 @@ create table music_band
     establishment_date     timestamp(6),
     genre                  varchar(255) not null,
     name                   varchar(255) not null,
-    number_of_participants integer      not null,
+    number_of_participants integer,
     singles_count          integer      not null,
     album_id               integer      not null,
     coordinates_id         integer      not null,
