@@ -11,6 +11,8 @@ import ru.itmo.is_lab1.domain.entity.Studio;
 import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
+import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
+import ru.itmo.is_lab1.security.interceptor.annotation.WithWebsocketNotification;
 import ru.itmo.is_lab1.service.MusicBandService;
 
 import java.util.HashSet;
@@ -26,6 +28,7 @@ public class MusicBandServiceImpl implements MusicBandService {
     @Inject
     private StudioDAO studioDAO;
 
+    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
     public void deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
         try {
@@ -40,6 +43,7 @@ public class MusicBandServiceImpl implements MusicBandService {
         }
     }
 
+    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
     public MusicBand updateById(MusicBand newMusicBand, String userLogin) throws CanNotUpdateEntityException {
         try {
@@ -68,6 +72,7 @@ public class MusicBandServiceImpl implements MusicBandService {
         return musicBandDAO.findAll(queryFilter);
     }
 
+    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
         try {
