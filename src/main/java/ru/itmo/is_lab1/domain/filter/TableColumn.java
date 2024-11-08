@@ -28,7 +28,12 @@ public enum TableColumn {
 
     USER_LOGIN("login"),
     USER_ROLE("role"),
-    USER_IS_APPROVED("isApproved");
+    USER_IS_APPROVED("isApproved"),
+
+    ENTITY_CHANGE_HISTORY_USER_LOGIN("login"),
+    ENTITY_CHANGE_HISTORY_OPERATION("operation"),
+    ENTITY_CHANGE_HISTORY_ENTITY_ID("musicBandId"),
+    ENTITY_CHANGE_HISTORY_TIME("time");
 
     private final String attributeName;
 

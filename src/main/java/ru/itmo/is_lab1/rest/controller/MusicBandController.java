@@ -7,11 +7,14 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import ru.itmo.is_lab1.domain.entity.EntityChangeHistory;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
+import ru.itmo.is_lab1.rest.dto.EntityChangeHistoryDTO;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
+import ru.itmo.is_lab1.service.EntityChangeHistoryService;
 import ru.itmo.is_lab1.service.MusicBandService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
@@ -20,6 +23,8 @@ import static ru.itmo.is_lab1.util.HttpResponse.*;
 public class MusicBandController {
     @Inject
     private MusicBandService musicBandService;
+    @Inject
+    private EntityChangeHistoryService entityChangeHistoryService;
 
     @POST
     @Path("/")
@@ -40,8 +45,7 @@ public class MusicBandController {
     public Response deleteMusicBand(@PathParam("id") Integer id, @Context HttpServletRequest request){
         try{
             String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
-            musicBandService.deleteById(id, login);
-            return ok(id);
+            return ok(musicBandService.deleteById(id, login));
         } catch (CanNotDeleteEntityException e) {
             return error(e.getMessage());
         }
@@ -85,6 +89,20 @@ public class MusicBandController {
             var res = musicBandService.getById(id);
             return ok(MusicBandDTO.fromDomain(res));
         } catch (CanNotGetByIdEntityException e) {
+            return error(e.getMessage());
+        }
+    }
+
+    @POST
+    @Path("/history")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllChangeHistory(@Valid QueryFilter queryFilter){
+        try {
+            var histories = entityChangeHistoryService.getAllHistory(queryFilter);
+            var historyDTOs = histories.stream().map(EntityChangeHistoryDTO::fromDomain).toList();
+            return ok(historyDTOs);
+        } catch (CanNotGetAllEntitiesException e) {
             return error(e.getMessage());
         }
     }

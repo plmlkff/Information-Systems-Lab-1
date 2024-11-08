@@ -1,7 +1,8 @@
-package ru.itmo.is_lab1.security.interceptor.annotation;
+package ru.itmo.is_lab1.interceptor.annotation;
 
 import jakarta.enterprise.util.Nonbinding;
 import jakarta.interceptor.InterceptorBinding;
+import ru.itmo.is_lab1.domain.entity.UserRole;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,13 +12,7 @@ import java.lang.annotation.Target;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface WithWebsocketNotification {
-    /**
-     * WebSocket class with static notifyAllListeners method;
-     */
+public @interface WithPrivileges {
     @Nonbinding
-    Class<?>[] value() default {};
-
-    @Nonbinding
-    String message() default "Notification";
+    UserRole[] value() default {};
 }

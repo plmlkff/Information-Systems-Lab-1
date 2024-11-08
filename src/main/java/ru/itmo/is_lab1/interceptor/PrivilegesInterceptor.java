@@ -1,4 +1,4 @@
-package ru.itmo.is_lab1.security.interceptor;
+package ru.itmo.is_lab1.interceptor;
 
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
@@ -11,7 +11,7 @@ import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.exceptions.interceptor.AccessDeniedException;
 import ru.itmo.is_lab1.exceptions.interceptor.LoginRequiredException;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
+import ru.itmo.is_lab1.interceptor.annotation.WithPrivileges;
 
 import java.util.Arrays;
 

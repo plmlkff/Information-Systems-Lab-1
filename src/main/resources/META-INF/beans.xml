@@ -4,7 +4,8 @@
        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
         bean-discovery-mode="all">
     <interceptors>
-        <class>ru.itmo.is_lab1.security.interceptor.PrivilegesInterceptor</class>
-        <class>ru.itmo.is_lab1.security.interceptor.WebSocketNotificationsInterceptor</class>
+        <class>ru.itmo.is_lab1.interceptor.PrivilegesInterceptor</class>
+        <class>ru.itmo.is_lab1.interceptor.WebSocketNotificationsInterceptor</class>
+        <class>ru.itmo.is_lab1.interceptor.HistoryInterceptor</class>
     </interceptors>
 </beans>

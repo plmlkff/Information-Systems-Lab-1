@@ -2,22 +2,20 @@ package ru.itmo.is_lab1.service.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.hibernate.Session;
 import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
-import ru.itmo.is_lab1.domain.dao.StudioDAO;
 import ru.itmo.is_lab1.domain.dao.UserDAO;
+import ru.itmo.is_lab1.domain.entity.EntityChangeHistory;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
-import ru.itmo.is_lab1.domain.entity.Studio;
 import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
+import ru.itmo.is_lab1.interceptor.annotation.HistoryLog;
 import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithWebsocketNotification;
+import ru.itmo.is_lab1.interceptor.annotation.WithWebsocketNotification;
 import ru.itmo.is_lab1.service.MusicBandService;
 
-import java.util.HashSet;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class MusicBandServiceImpl implements MusicBandService {
@@ -26,9 +24,10 @@ public class MusicBandServiceImpl implements MusicBandService {
     @Inject
     private UserDAO userDAO;
 
-    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
-    public void deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
+    @WithWebsocketNotification(NotificationWebSocket.class)
+    @HistoryLog(operationType = EntityChangeHistory.OperationType.DELETE)
+    public Integer deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(id);
             if (musicBand == null) throw new CanNotGetByIdEntityException();
@@ -36,13 +35,15 @@ public class MusicBandServiceImpl implements MusicBandService {
                 throw new CanNotDeleteEntityException("Permissions denied!");
             }
             musicBandDAO.delete(musicBand);
+            return musicBand.getId();
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotDeleteEntityException("ID does not exist");
         }
     }
 
-    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
+    @WithWebsocketNotification(NotificationWebSocket.class)
+    @HistoryLog(operationType = EntityChangeHistory.OperationType.UPDATE)
     public MusicBand updateById(MusicBand newMusicBand, String userLogin) throws CanNotUpdateEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(newMusicBand.getId());
@@ -59,6 +60,7 @@ public class MusicBandServiceImpl implements MusicBandService {
         }
     }
 
+    @Deprecated
     @Override
     public List<MusicBand> getAll() throws CanNotGetAllEntitiesException {
         return musicBandDAO.findAll();
@@ -69,14 +71,16 @@ public class MusicBandServiceImpl implements MusicBandService {
         return musicBandDAO.findAll(queryFilter);
     }
 
-    @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
+    @WithWebsocketNotification(NotificationWebSocket.class)
+    @HistoryLog(operationType = EntityChangeHistory.OperationType.CREATE)
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
         try {
             if (musicBand.getId() != null) throw new CanNotSaveEntityException("Id must be null!");
             User owner = userDAO.findById(ownerLogin);
             if (owner == null) throw new CanNotGetByIdEntityException();
             musicBand.setOwner(owner);
+            musicBand.setCreationDate(LocalDate.now());
             return musicBandDAO.save(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotSaveEntityException("User not found!");

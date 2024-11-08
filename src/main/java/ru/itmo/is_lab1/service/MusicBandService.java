@@ -9,7 +9,7 @@ import java.util.List;
 public interface MusicBandService {
     MusicBand updateById(MusicBand newMusicBand, String userLogin) throws CanNotUpdateEntityException;
 
-    void deleteById(Integer id, String ownerLogin) throws CanNotDeleteEntityException;
+    Integer deleteById(Integer id, String ownerLogin) throws CanNotDeleteEntityException;
 
     @Deprecated
     List<MusicBand> getAll() throws CanNotGetAllEntitiesException;

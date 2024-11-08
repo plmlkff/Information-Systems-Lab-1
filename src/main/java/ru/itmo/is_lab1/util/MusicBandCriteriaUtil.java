@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.From;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import ru.itmo.is_lab1.domain.entity.EntityChangeHistory;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.TableColumn;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
@@ -18,6 +19,7 @@ public class MusicBandCriteriaUtil extends CriteriaUtil{
             case MUSIC_BAND_BEST_ALBUM_NAME, MUSIC_BAND_BEST_ALBUM_SALES -> rootQuery.join(MusicBand.Attributes.BEST_ALBUM);
             case MUSIC_BAND_STUDIO_ADDRESS -> rootQuery.join(MusicBand.Attributes.STUDIO);
             case MUSIC_BAND_USER_LOGIN -> rootQuery.join(MusicBand.Attributes.OWNER);
+            case ENTITY_CHANGE_HISTORY_USER_LOGIN -> rootQuery.join(EntityChangeHistory.Attributes.USER);
             default -> rootQuery;
         };
     }

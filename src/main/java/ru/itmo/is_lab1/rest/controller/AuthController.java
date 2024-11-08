@@ -9,14 +9,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.User;
-import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.rest.dto.AuthDTO;
 import ru.itmo.is_lab1.rest.dto.UserDTO;
-import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithWebsocketNotification;
 import ru.itmo.is_lab1.service.AuthService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;

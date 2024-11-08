@@ -1,10 +1,10 @@
-package ru.itmo.is_lab1.security.interceptor;
+package ru.itmo.is_lab1.interceptor;
 
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
 import ru.itmo.is_lab1.exceptions.interceptor.CanNotSendNotificationsException;
-import ru.itmo.is_lab1.security.interceptor.annotation.WithWebsocketNotification;
+import ru.itmo.is_lab1.interceptor.annotation.WithWebsocketNotification;
 
 import java.lang.reflect.Method;
 

@@ -36,7 +36,8 @@ public class HibernateUtils {
                     .addAnnotatedClass(Coordinates.class)
                     .addAnnotatedClass(MusicBand.class)
                     .addAnnotatedClass(Studio.class)
-                    .addAnnotatedClass(User.class).buildSessionFactory();
+                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(EntityChangeHistory.class).buildSessionFactory();
             return sessionFactory;
         } catch (IOException ex) {
             System.err.println("Something went wrong");
