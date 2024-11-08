@@ -16,7 +16,7 @@ public class QueryFilter {
 
     private FullJoinedMusicBandColumn sortColumn = FullJoinedMusicBandColumn.ID;
 
-    private int pageNumber = 0;
+    private int pageNumber = 1;
 
     private int pageSize = 50;
 

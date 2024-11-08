@@ -28,7 +28,6 @@ public class HibernateUtils {
         try {
             Properties properties = new Properties();
             properties.load(HibernateUtils.class.getClassLoader().getResourceAsStream("/hibernate.cfg.properties"));
-            System.out.println(properties.getProperty("password"));
             SessionFactory sessionFactory = new Configuration().configure().setProperty(AvailableSettings.USER, properties.getProperty(AvailableSettings.USER)).
                     setProperty(AvailableSettings.PASS, properties.getProperty(AvailableSettings.PASS))
                     .setProperty(AvailableSettings.SHOW_SQL, properties.getProperty(AvailableSettings.SHOW_SQL))
