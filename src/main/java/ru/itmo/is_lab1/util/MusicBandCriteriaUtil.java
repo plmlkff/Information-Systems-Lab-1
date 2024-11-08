@@ -14,10 +14,10 @@ public class MusicBandCriteriaUtil extends CriteriaUtil{
     @Override
     public <T> From<T, ?> makeNeededJoins(TableColumn column, Root<T> rootQuery){
         return switch (column){
-            case COORDINATE_X, COORDINATE_Y -> rootQuery.join(MusicBand.Attributes.COORDINATES);
-            case BEST_ALBUM_NAME, BEST_ALBUM_SALES -> rootQuery.join(MusicBand.Attributes.BEST_ALBUM);
-            case STUDIO_ADDRESS -> rootQuery.join(MusicBand.Attributes.STUDIO);
-            case USER_LOGIN -> rootQuery.join(MusicBand.Attributes.OWNER);
+            case MUSIC_BAND_COORDINATE_X, MUSIC_BAND_COORDINATE_Y -> rootQuery.join(MusicBand.Attributes.COORDINATES);
+            case MUSIC_BAND_BEST_ALBUM_NAME, MUSIC_BAND_BEST_ALBUM_SALES -> rootQuery.join(MusicBand.Attributes.BEST_ALBUM);
+            case MUSIC_BAND_STUDIO_ADDRESS -> rootQuery.join(MusicBand.Attributes.STUDIO);
+            case MUSIC_BAND_USER_LOGIN -> rootQuery.join(MusicBand.Attributes.OWNER);
             default -> rootQuery;
         };
     }
