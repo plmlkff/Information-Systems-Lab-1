@@ -16,5 +16,8 @@ public @interface WithWebsocketNotification {
      * WebSocket class with static notifyAllListeners method;
      */
     @Nonbinding
-    Class<?> value() default Object.class;
+    Class<?>[] value() default {};
+
+    @Nonbinding
+    String message() default "Notification";
 }

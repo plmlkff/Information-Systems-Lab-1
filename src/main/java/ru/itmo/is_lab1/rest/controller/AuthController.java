@@ -30,7 +30,6 @@ public class AuthController {
     @Path("/auth")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @WithWebsocketNotification(NotificationWebSocket.class)
     public Response auth(@Valid AuthDTO authDTO){
         try {
             User user = authService.auth(authDTO.getLogin(), authDTO.getPassword());

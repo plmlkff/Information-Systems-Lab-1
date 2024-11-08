@@ -20,10 +20,10 @@ public class NotificationWebSocket {
         System.out.println("New connection: " + session.getId());
     }
 
-    public static void notifyAllListeners(){
+    public static void notifyAllListeners(String message){
         for (var session : activeSessions){
             try {
-                session.getBasicRemote().sendText("Notification");
+                session.getBasicRemote().sendText(message);
             } catch (IOException ignored) {
             }
         }
