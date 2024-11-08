@@ -45,7 +45,8 @@ public class JWTFilter implements Filter {
     private enum AllowedPath{
         LOGIN("/api/user/auth"),
         SIGNUP("/api/user/signup"),
-        TEST("/api/hello-world");
+        TEST("/api/hello-world"),
+        WEBSOCKET("/api/domain/changed");
         private final String uri;
         AllowedPath(String uri){
             this.uri = uri;

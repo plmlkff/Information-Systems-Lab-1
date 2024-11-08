@@ -115,7 +115,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
             QueryFilter queryFilter, CriteriaBuilder criteriaBuilder
     ){
         var sortColumn = queryFilter.getSortColumn();
-        var sortColumnFrom = criteriaUtil.getFrom(sortColumn, rootQuery);
+        var sortColumnFrom = criteriaUtil.makeNeededJoins(sortColumn, rootQuery);
         if (queryFilter.getSortDirection() == QueryFilter.SortDirection.ASC){
             query.orderBy(criteriaBuilder.asc(sortColumnFrom.get(sortColumn.toString())));
         } else {

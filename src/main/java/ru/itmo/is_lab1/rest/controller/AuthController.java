@@ -13,6 +13,7 @@ import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.rest.dto.AuthDTO;
 import ru.itmo.is_lab1.rest.dto.UserDTO;
+import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
 import ru.itmo.is_lab1.service.AuthService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
