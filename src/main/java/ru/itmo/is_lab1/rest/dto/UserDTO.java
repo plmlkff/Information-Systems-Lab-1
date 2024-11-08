@@ -6,8 +6,6 @@ import lombok.Data;
 import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.domain.entity.UserRole;
 
-import java.util.List;
-
 @Data
 public class UserDTO {
     @NotNull

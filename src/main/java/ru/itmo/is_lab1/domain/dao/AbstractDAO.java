@@ -13,7 +13,8 @@ public interface AbstractDAO<T, ID> {
     void delete(T entity) throws CanNotDeleteEntityException;
 
     T findById(ID id) throws CanNotGetByIdEntityException;
-    
+
+    @Deprecated
     List<T> findAll() throws CanNotGetAllEntitiesException;
 
     List<T> findAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;
