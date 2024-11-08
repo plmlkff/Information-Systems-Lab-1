@@ -7,5 +7,4 @@ import ru.itmo.is_lab1.exceptions.domain.CanNotGetAllEntitiesException;
 import java.util.List;
 
 public interface MusicBandDAO extends AbstractDAO<MusicBand, Integer> {
-    List<MusicBand> findAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;
 }

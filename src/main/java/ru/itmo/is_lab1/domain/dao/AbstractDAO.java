@@ -1,5 +1,6 @@
 package ru.itmo.is_lab1.domain.dao;
 
+import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 
@@ -15,4 +16,6 @@ public interface AbstractDAO<T, ID> {
     T findById(ID id) throws CanNotGetByIdEntityException;
     
     List<T> findAll() throws CanNotGetAllEntitiesException;
+
+    public List<T> findAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;
 }

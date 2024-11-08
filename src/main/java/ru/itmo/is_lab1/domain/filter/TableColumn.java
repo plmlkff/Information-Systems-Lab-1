@@ -1,6 +1,6 @@
 package ru.itmo.is_lab1.domain.filter;
 
-public enum FullJoinedMusicBandColumn {
+public enum TableColumn {
     ID("id"),
     MUSIC_BAND_NAME("name"),
     COORDINATE_X("x"),
@@ -18,7 +18,7 @@ public enum FullJoinedMusicBandColumn {
     USER_LOGIN("login");
     private final String attributeName;
 
-    FullJoinedMusicBandColumn(String attributeName) {
+    TableColumn(String attributeName) {
         this.attributeName = attributeName;
     }
 
