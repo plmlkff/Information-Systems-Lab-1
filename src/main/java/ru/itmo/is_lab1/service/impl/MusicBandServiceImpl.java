@@ -25,8 +25,6 @@ public class MusicBandServiceImpl implements MusicBandService {
     private MusicBandDAO musicBandDAO;
     @Inject
     private UserDAO userDAO;
-    @Inject
-    private StudioDAO studioDAO;
 
     @WithWebsocketNotification(NotificationWebSocket.class)
     @Override

@@ -62,7 +62,6 @@ public class MusicBand {
     private Integer albumsCount; //Поле не может быть null, Значение поля должно быть больше 0
 
     @Column(name = "establishment_date")
-    @NotNull
     private LocalDateTime establishmentDate;
 
     @OneToOne(cascade = CascadeType.ALL)

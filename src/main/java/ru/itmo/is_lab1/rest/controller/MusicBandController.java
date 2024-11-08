@@ -54,6 +54,7 @@ public class MusicBandController {
     public Response updateMusicBand(MusicBandDTO musicBandDTO, @PathParam("id") Integer id, @Context HttpServletRequest request){
         try{
             String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
+            musicBandDTO.setId(id);
             MusicBand musicBand = musicBandService.updateById(MusicBandDTO.toDomain(musicBandDTO), login);
             return ok(MusicBandDTO.fromDomain(musicBand));
         } catch (CanNotUpdateEntityException e) {

@@ -16,7 +16,7 @@ create table music_band
     albums_count           integer      not null check (albums_count >= 1),
     creation_date          date         not null,
     description            varchar(255) not null,
-    establishment_date     timestamp(6) not null,
+    establishment_date     timestamp(6),
     genre                  varchar(255) not null,
     name                   varchar(255) not null,
     number_of_participants integer      not null,
