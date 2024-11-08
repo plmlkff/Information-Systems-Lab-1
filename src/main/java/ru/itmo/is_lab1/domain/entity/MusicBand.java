@@ -65,14 +65,10 @@ public class MusicBand {
     @NotNull
     private LocalDateTime establishmentDate;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(
-            name = "musicband_to_studio",
-            joinColumns = @JoinColumn(name = "musicband_id"),
-            inverseJoinColumns = @JoinColumn(name = "studio_id")
-    )
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "studio_id")
     @NotNull
-    private Set<Studio> studio; //Поле не может быть null
+    private Studio studio; //Поле не может быть null
 
     @ToString.Exclude
     @ManyToOne(cascade = {CascadeType.REFRESH})
@@ -90,6 +86,7 @@ public class MusicBand {
         bestAlbum.merge(newMusicBand.getBestAlbum());
         albumsCount = newMusicBand.getAlbumsCount();
         establishmentDate = newMusicBand.getEstablishmentDate();
+        studio.merge(newMusicBand.getStudio());
     }
 
     public interface Attributes{

@@ -53,7 +53,6 @@ public class MusicBandServiceImpl implements MusicBandService {
                 throw new CanNotUpdateEntityException("Permissions denied!");
             }
             musicBand.merge(newMusicBand);
-            musicBand.setStudio(replaceAlreadyExistStudios(newMusicBand.getStudio()));
             return musicBandDAO.save(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotUpdateEntityException("ID does not exist");
@@ -80,24 +79,10 @@ public class MusicBandServiceImpl implements MusicBandService {
             User owner = userDAO.findById(ownerLogin);
             if (owner == null) throw new CanNotGetByIdEntityException();
             musicBand.setOwner(owner);
-            musicBand.setStudio(replaceAlreadyExistStudios(musicBand.getStudio()));
             return musicBandDAO.save(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotSaveEntityException("User not found!");
         }
-    }
-
-    private Set<Studio> replaceAlreadyExistStudios(Set<Studio> studios){
-        Set<Studio> replacedSet = new HashSet<>();
-        for (var studio : studios){
-            try{
-                var dbStudio = studioDAO.findByAddress(studio.getAddress());
-                replacedSet.add(dbStudio == null ? studio : dbStudio);
-            } catch (CanNotGetStudioByAddressException e) {
-                replacedSet.add(studio);
-            }
-        }
-        return replacedSet;
     }
 
     @Override

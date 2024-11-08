@@ -5,13 +5,13 @@ import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
 import jakarta.servlet.http.HttpServletRequest;
+import ru.itmo.is_lab1.domain.dao.UserDAO;
 import ru.itmo.is_lab1.domain.entity.User;
 import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.exceptions.interceptor.AccessDeniedException;
 import ru.itmo.is_lab1.exceptions.interceptor.LoginRequiredException;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
 import ru.itmo.is_lab1.security.interceptor.annotation.WithPrivileges;
-import ru.itmo.is_lab1.service.UserService;
 
 import java.util.Arrays;
 
@@ -21,13 +21,13 @@ public class PrivilegesInterceptor {
     @Inject
     private HttpServletRequest request;
     @Inject
-    private UserService userService;
+    private UserDAO userDAO;
 
     @AroundInvoke
     public Object checkMethod(InvocationContext context) throws Exception {
         String login  = getLoginFromRequest();
         if (login == null) throw new LoginRequiredException();
-        User user = userService.getByLogin(login);
+        User user = userDAO.findById(login);
         if (isAnnotationContainsUserRole(context, user.getRole())){
             return context.proceed();
         }

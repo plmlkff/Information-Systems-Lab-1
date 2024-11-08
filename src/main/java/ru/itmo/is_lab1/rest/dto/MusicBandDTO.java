@@ -51,7 +51,7 @@ public class MusicBandDTO {
     private long establishmentDate;
 
     @NotNull
-    private Set<StudioDTO> studio; //Поле не может быть null
+    private StudioDTO studio; //Поле не может быть null
 
     private String ownerLogin;
     
@@ -69,7 +69,7 @@ public class MusicBandDTO {
         musicBandDTO.setBestAlbum(AlbumDTO.fromDomain(musicBand.getBestAlbum()));
         musicBandDTO.setAlbumsCount(musicBand.getAlbumsCount());
         musicBandDTO.setEstablishmentDate(musicBand.getEstablishmentDate().toEpochSecond(ZoneOffset.UTC));
-        musicBandDTO.setStudio(musicBand.getStudio().stream().map(StudioDTO::fromDomain).collect(Collectors.toSet()));
+        musicBandDTO.setStudio(StudioDTO.fromDomain(musicBand.getStudio()));
         musicBandDTO.setOwnerLogin(musicBand.getOwner() == null ? null : musicBand.getOwner().getLogin());
         return musicBandDTO;
     }
@@ -88,7 +88,7 @@ public class MusicBandDTO {
         musicBand.setBestAlbum(AlbumDTO.toDomain(musicBandDTO.getBestAlbum()));
         musicBand.setAlbumsCount(musicBandDTO.getAlbumsCount());
         musicBand.setEstablishmentDate(LocalDateTime.ofInstant(Instant.ofEpochSecond(musicBandDTO.getEstablishmentDate()), ZoneOffset.UTC));
-        musicBand.setStudio(musicBandDTO.getStudio().stream().map(StudioDTO::toDomain).collect(Collectors.toSet()));
+        musicBand.setStudio(StudioDTO.toDomain(musicBandDTO.getStudio()));
         return musicBand;
     }
 }

@@ -23,17 +23,13 @@ create table music_band
     singles_count          integer      not null,
     album_id               integer      not null,
     coordinates_id         integer      not null,
+    studio_id              integer      not null,
     owner_login            varchar(255)
-);
-create table musicband_to_studio
-(
-    musicband_id integer not null,
-    studio_id    integer not null
 );
 create table studio
 (
     id      serial primary key,
-    address varchar(255) not null unique
+    address varchar(255) not null
 );
 create table person
 (
@@ -42,8 +38,11 @@ create table person
     password    varchar(255) not null,
     role        varchar(255)
 );
-alter table if exists music_band add constraint music_band_album_id_fk foreign key (album_id) references album;
-alter table if exists music_band add constraint music_band_coordinates_id_fk foreign key (coordinates_id) references coordinates;
-alter table if exists music_band add constraint music_band_owner_login_fk foreign key (owner_login) references person;
-alter table if exists musicband_to_studio add constraint musicband_to_studio_studio_id_fk foreign key (studio_id) references studio;
-alter table if exists musicband_to_studio add constraint musicband_to_studio_musicband_id_fk foreign key (musicband_id) references music_band;
+alter table if exists music_band
+    add constraint music_band_album_id_fk foreign key (album_id) references album;
+alter table if exists music_band
+    add constraint music_band_coordinates_id_fk foreign key (coordinates_id) references coordinates;
+alter table if exists music_band
+    add constraint music_band_owner_login_fk foreign key (owner_login) references person;
+alter table if exists music_band
+    add constraint music_band_studio_id_fk foreign key (studio_id) references studio;

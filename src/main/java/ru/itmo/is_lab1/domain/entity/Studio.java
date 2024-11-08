@@ -12,9 +12,13 @@ public class Studio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column
     @NotNull
     private String address; //Поле не может быть null
+
+    public void merge(Studio newStudio){
+        address = newStudio.getAddress();
+    }
 
     public interface Columns{
         String ADDRESS = "address";
