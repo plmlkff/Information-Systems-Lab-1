@@ -36,7 +36,6 @@ public class MusicBandDTO {
     @NotNull
     private int singlesCount; //Значение поля должно быть больше 0
 
-    @NotNull
     private String description; //Поле может быть null
 
     @NotNull

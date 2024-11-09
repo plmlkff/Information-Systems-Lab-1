@@ -46,7 +46,6 @@ public class MusicBand {
     private int singlesCount; //Значение поля должно быть больше 0
 
     @Column
-    @NotNull
     private String description; //Поле может быть null
 
     @OneToOne(cascade = CascadeType.ALL)
