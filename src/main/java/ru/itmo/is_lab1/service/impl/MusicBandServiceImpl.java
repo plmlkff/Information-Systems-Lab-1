@@ -7,6 +7,7 @@ import ru.itmo.is_lab1.domain.dao.UserDAO;
 import ru.itmo.is_lab1.domain.entity.EntityChangeHistory;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.entity.User;
+import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.interceptor.annotation.HistoryLog;
@@ -30,8 +31,10 @@ public class MusicBandServiceImpl implements MusicBandService {
     public Integer deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(id);
+            User user = userDAO.findById(userLogin);
+            if (user == null) throw new CanNotDeleteEntityException("Owner does not exist!");
             if (musicBand == null) throw new CanNotGetByIdEntityException();
-            if (!musicBand.getOwner().getLogin().equals(userLogin)) {
+            if (user.getRole() != UserRole.ADMIN && !musicBand.getOwner().getLogin().equals(userLogin)) {
                 throw new CanNotDeleteEntityException("Permissions denied!");
             }
             musicBandDAO.delete(musicBand);
@@ -47,8 +50,10 @@ public class MusicBandServiceImpl implements MusicBandService {
     public MusicBand updateById(MusicBand newMusicBand, String userLogin) throws CanNotUpdateEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(newMusicBand.getId());
+            User user = userDAO.findById(userLogin);
+            if (user == null) throw new CanNotUpdateEntityException("Owner does not exist!");
             if (musicBand == null) throw new CanNotGetByIdEntityException();
-            if (!musicBand.getOwner().getLogin().equals(userLogin)) {
+            if (user.getRole() != UserRole.ADMIN && !musicBand.getOwner().getLogin().equals(userLogin)) {
                 throw new CanNotUpdateEntityException("Permissions denied!");
             }
             musicBand.merge(newMusicBand);
