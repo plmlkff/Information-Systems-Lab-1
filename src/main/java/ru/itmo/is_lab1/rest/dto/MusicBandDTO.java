@@ -28,7 +28,6 @@ public class MusicBandDTO {
     private long creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private MusicGenre genre; //Поле может быть null
 
     @Min(1)

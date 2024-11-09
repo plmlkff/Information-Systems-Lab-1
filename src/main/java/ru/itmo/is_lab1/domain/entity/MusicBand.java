@@ -36,7 +36,6 @@ public class MusicBand {
 
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull
     private MusicGenre genre; //Поле может быть null
 
     @Column(name = "number_of_participants")
