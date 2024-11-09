@@ -93,4 +93,9 @@ public class MusicBandServiceImpl implements MusicBandService {
         if (musicBand == null) throw new CanNotGetByIdEntityException("ID does not exist!");
         return musicBand;
     }
+
+    @Override
+    public Long count(QueryFilter queryFilter) throws CanNotGetCountException {
+        return musicBandDAO.count(queryFilter);
+    }
 }

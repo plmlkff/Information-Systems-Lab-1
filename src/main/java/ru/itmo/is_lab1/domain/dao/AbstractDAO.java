@@ -18,4 +18,6 @@ public interface AbstractDAO<T, ID> {
     List<T> findAll() throws CanNotGetAllEntitiesException;
 
     List<T> findAll(QueryFilter queryFilter) throws CanNotGetAllEntitiesException;
+
+    Long count(QueryFilter queryFilter) throws CanNotGetCountException;
 }

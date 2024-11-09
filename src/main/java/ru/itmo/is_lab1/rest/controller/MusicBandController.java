@@ -106,4 +106,16 @@ public class MusicBandController {
             return error(e.getMessage());
         }
     }
+
+    @POST
+    @Path("/count")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCount(QueryFilter queryFilter){
+        try{
+            return ok(musicBandService.count(queryFilter));
+        } catch (CanNotGetCountException e) {
+            return error(e.getMessage());
+        }
+    }
 }

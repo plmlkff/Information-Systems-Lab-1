@@ -19,4 +19,6 @@ public interface MusicBandService {
     MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException;
 
     MusicBand getById(Integer id) throws CanNotGetByIdEntityException;
+
+    Long count(QueryFilter queryFilter) throws CanNotGetCountException;
 }

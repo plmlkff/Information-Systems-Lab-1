@@ -109,6 +109,27 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         }
     }
 
+    @Override
+    public Long count(QueryFilter queryFilter) throws CanNotGetCountException {
+        try{
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+            Root<T> rootQuery = query.from(type);
+
+            Predicate predicate = joinPredicates(criteriaBuilder, rootQuery, queryFilter.getCriteria());
+            query.where(predicate);
+
+            query.select(criteriaBuilder.count(rootQuery));
+
+            var sessionQuery = session.createQuery(query);
+
+            return sessionQuery.getSingleResult();
+        } catch (Throwable e){
+            throw new CanNotGetCountException(e.getMessage());
+        }
+    }
+
     private void makeOrderBy(
             CriteriaQuery<T> query, Root<T> rootQuery,
             QueryFilter queryFilter, CriteriaBuilder criteriaBuilder
