@@ -26,12 +26,12 @@ public class PrivilegesInterceptor {
     @AroundInvoke
     public Object checkMethod(InvocationContext context) throws Exception {
         String login  = getLoginFromRequest();
-        if (login == null) throw new LoginRequiredException();
+        if (login == null) throw new LoginRequiredException("Can not get login from user token!");
         User user = userDAO.findById(login);
         if (isAnnotationContainsUserRole(context, user.getRole())){
             return context.proceed();
         }
-        throw new AccessDeniedException();
+        throw new AccessDeniedException("Permission denied!");
     }
 
     private boolean isAnnotationContainsUserRole(InvocationContext context, UserRole userRole){
