@@ -55,7 +55,7 @@ public class MusicBandController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateMusicBand(MusicBandDTO musicBandDTO, @PathParam("id") Integer id, @Context HttpServletRequest request){
+    public Response updateMusicBand(@Valid MusicBandDTO musicBandDTO, @PathParam("id") Integer id, @Context HttpServletRequest request){
         try{
             String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
             musicBandDTO.setId(id);
@@ -111,7 +111,7 @@ public class MusicBandController {
     @Path("/count")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCount(QueryFilter queryFilter){
+    public Response getCount(@Valid QueryFilter queryFilter){
         try{
             return ok(musicBandService.count(queryFilter));
         } catch (CanNotGetCountException e) {
