@@ -4,6 +4,11 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 public class HttpResponse {
+    public static <T> Response ok() {
+        return Response.status(Status.OK)
+                .build();
+    }
+
     public static <T> Response ok(T body) {
         return Response.status(Status.OK)
                 .entity(body)

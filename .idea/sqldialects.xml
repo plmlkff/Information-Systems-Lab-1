@@ -3,5 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/1_CREATE_TABLES.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/2_CREATE_ENTITY_CHANGE_HISTORY_TABLE.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/3_CREATE_FUNCTIONS.sql" dialect="PostgreSQL" />
   </component>
 </project>
