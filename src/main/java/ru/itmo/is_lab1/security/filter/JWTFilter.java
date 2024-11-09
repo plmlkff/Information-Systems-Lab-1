@@ -1,5 +1,6 @@
 package ru.itmo.is_lab1.security.filter;
 
+import jakarta.annotation.Priority;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import ru.itmo.is_lab1.security.service.impl.JWTServiceImpl;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/api/*")
+@Priority(2)
 public class JWTFilter implements Filter {
     public static final String LOGIN_ATTRIBUTE_NAME = "token_login";
     private final int ACCESS_DENIED_ERROR = 403;
