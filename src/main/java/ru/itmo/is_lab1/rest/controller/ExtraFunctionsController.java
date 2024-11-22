@@ -72,8 +72,7 @@ public class ExtraFunctionsController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response countMusicBandsByGenre(@QueryParam("genre") MusicGenre genre){
         try {
-            extraFunctionsService.countMusicBandsByGenre(genre);
-            return ok();
+            return ok(extraFunctionsService.countMusicBandsByGenre(genre));
         } catch (CanNotExecuteFunctionException e) {
             return error(e.getMessage());
         }

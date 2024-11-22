@@ -5,13 +5,11 @@ import jakarta.inject.Inject;
 import ru.itmo.is_lab1.domain.dao.FunctionsDAO;
 import ru.itmo.is_lab1.domain.dao.MusicBandDAO;
 import ru.itmo.is_lab1.domain.dao.UserDAO;
-import ru.itmo.is_lab1.domain.entity.MusicBand;
-import ru.itmo.is_lab1.domain.entity.MusicGenre;
-import ru.itmo.is_lab1.domain.entity.User;
-import ru.itmo.is_lab1.domain.entity.UserRole;
+import ru.itmo.is_lab1.domain.entity.*;
 import ru.itmo.is_lab1.exceptions.domain.CanNotDeleteEntityException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotExecuteFunctionException;
 import ru.itmo.is_lab1.exceptions.domain.CanNotGetByIdEntityException;
+import ru.itmo.is_lab1.interceptor.annotation.HistoryLog;
 import ru.itmo.is_lab1.interceptor.annotation.WithWebsocketNotification;
 import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
 import ru.itmo.is_lab1.service.ExtraFunctionsService;
@@ -36,8 +34,9 @@ public class ExtraFunctionsServiceImpl implements ExtraFunctionsService {
     }
 
     @Override
+    @HistoryLog(operationType = EntityChangeHistory.OperationType.UPDATE)
     @WithWebsocketNotification(NotificationWebSocket.class)
-    public void increaseParticipants(int id, String userLogin) throws CanNotExecuteFunctionException {
+    public MusicBand increaseParticipants(int id, String userLogin) throws CanNotExecuteFunctionException {
         try{
             MusicBand musicBand = musicBandDAO.findById(id);
             User user = userDAO.findById(userLogin);
@@ -47,14 +46,16 @@ public class ExtraFunctionsServiceImpl implements ExtraFunctionsService {
                 throw new CanNotExecuteFunctionException("Permissions denied!");
             }
             functionsDAO.increaseParticipants(id);
+            return musicBandDAO.findById(id);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotExecuteFunctionException(e.getMessage());
         }
     }
 
     @Override
+    @HistoryLog(operationType = EntityChangeHistory.OperationType.DELETE)
     @WithWebsocketNotification(NotificationWebSocket.class)
-    public void deleteMusicBand(int id, String userLogin) throws CanNotExecuteFunctionException {
+    public MusicBand deleteMusicBand(int id, String userLogin) throws CanNotExecuteFunctionException {
         try{
             MusicBand musicBand = musicBandDAO.findById(id);
             User user = userDAO.findById(userLogin);
@@ -63,11 +64,11 @@ public class ExtraFunctionsServiceImpl implements ExtraFunctionsService {
             if (user.getRole() != UserRole.ADMIN && !musicBand.getOwner().getLogin().equals(userLogin)) {
                 throw new CanNotDeleteEntityException("Permissions denied!");
             }
-            functionsDAO.increaseParticipants(id);
+            functionsDAO.deleteMusicBand(id);
+            return musicBand;
         } catch (CanNotGetByIdEntityException | CanNotDeleteEntityException e) {
             throw new CanNotExecuteFunctionException(e.getMessage());
         }
-        functionsDAO.deleteMusicBand(id);
     }
 
     @Override

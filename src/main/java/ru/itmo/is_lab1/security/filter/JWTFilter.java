@@ -22,6 +22,10 @@ public class JWTFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if (request.getMethod().equals("OPTIONS")){
+            response.setStatus(200);
+            return;
+        }
         String path = request.getRequestURI();
         if (AllowedPath.contains(path)){
             filterChain.doFilter(servletRequest, servletResponse);
