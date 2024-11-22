@@ -32,7 +32,7 @@ public class EntityChangeHistory {
     @NotNull
     private Date time;
 
-    public interface Attributes{
+    public interface Fields {
         String USER = "user";
     }
 

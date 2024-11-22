@@ -9,8 +9,6 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "music_band")
@@ -85,7 +83,7 @@ public class MusicBand {
         studio.merge(newMusicBand.getStudio());
     }
 
-    public interface Attributes{
+    public interface Fields {
         String COORDINATES = "coordinates";
         String BEST_ALBUM = "bestAlbum";
         String STUDIO = "studio";
