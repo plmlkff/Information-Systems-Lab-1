@@ -1,0 +1,97 @@
+.music-band-popup {
+    width: 60vw;
+}
+
+.music-band-popup .band-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    padding: 2vh 3vw;
+}
+
+.band-form label {
+    user-select: none;
+    text-align: left;
+}
+
+.band-form input, .band-form select {
+    font-size: 11pt;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 7px;
+    height: fit-content;
+    margin-top: 10px;
+    min-width: min(474px, 80vw);
+    transition: var(--fast-transition);
+}
+
+.band-form input:focus {
+    border-color: cornflowerblue;
+    outline: none;
+    box-shadow: 1px 1px 4px -1px var(--primary-color);
+}
+
+.band-form button {
+    font-size: 12pt;
+    font-family: inherit;
+    background: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 10px 55px;
+    cursor: pointer;
+    transition: var(--fast-transition);
+}
+
+.band-form button:hover, .band-form button:disabled {
+    background: white;
+    color: var(--primary-color);
+}
+
+.band-form .coordinates, .band-form .best-album {
+    display: flex;
+    align-items: center;
+    gap: 6%;
+}
+
+.band-form .coordinates label, .band-form .best-album  label{
+    width: 47%;
+}
+
+.band-form .coordinates input, .band-form .best-album input  {
+    min-width: 50px;
+    width: 90%;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.band-form .coordinates input[type=number], .band-form .best-album input[type=number] {
+    text-align: center;
+}
+
+.band-form .best-album input {
+    margin: 0;
+}
+
+.import-line {
+    display: flex;
+    gap: 20px;
+}
+
+.band-form .import-line input {
+    min-width: 0;
+    margin: 0;
+    margin-left: 5px;
+}
+.band-form .import-line button {
+    padding: 3px 7px;
+}
+
+.band-form input[value='']:invalid {
+    border-color: darkgrey;
+}
+
+.band-form input:focus:invalid, .band-form input:not([value='']):invalid {
+    border-color: red;
+    box-shadow: 1px 1px 4px -1px red;
+}

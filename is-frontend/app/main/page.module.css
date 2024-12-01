@@ -1,0 +1,218 @@
+.main{
+    font-family: sans-serif;
+    color: var(--text-color);
+    max-height: 100vh;
+}
+
+.title {
+    margin-top: 3vh;
+    font-size: 12pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.claims, .approve, .controls button, .filters_pane button {
+    margin: 1vh;
+    border-radius: 25px;
+    padding: 5px;
+    cursor: pointer;
+    color: var(--text-color);
+    background: white;
+    outline-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 2px 2px 4px -1px;
+}
+
+.claims_dialog{
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    padding: 2vh 1vw;
+}
+
+.claims:active, .controls button:active {
+    box-shadow: inset 2px 2px 4px -1px;
+}
+
+.claim {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 25px;
+    border: 1px solid var(--primary-color);
+    padding: 3px 5px;
+}
+
+.claim p{
+    margin: auto 0;
+}
+
+.approve {
+    margin: 0;
+    padding: 3px;
+    border: none;
+    box-shadow: none;
+    text-decoration: underline;
+    color: var(--primary-color);
+    transition: var(--fast-transition);
+}
+
+.approve:hover {
+    color: var(--text-color);
+}
+
+.filters_pane {
+    margin: 3vh 3vw 0 3vw;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filters_pane input, .filters_pane select {
+    font-size: 11pt;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 7px;
+    height: fit-content;
+    min-width: min(200px);
+    transition: var(--fast-transition);
+}
+
+.filters_pane input:focus, .filters_pane select:focus {
+    border-color: cornflowerblue;
+    outline: none;
+    box-shadow: 1px 1px 4px -1px var(--primary-color);
+}
+
+.filters {
+    margin: 1vh 3vw 0 3vw;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filters > * {
+    border-radius: 15px;
+    background: yellow;
+    padding: 3px 7px;
+}
+
+.data_table_container {
+    overflow-y: scroll;
+    height: 75vh;
+    max-width: 100%;
+    margin: 2vh 3vw 0 3vw;
+}
+
+.data_table {
+    max-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 12px;
+    display: table;
+    overflow-y: auto;
+}
+
+.data_table th {
+    cursor: pointer;
+}
+
+.data_table th.ascending {
+    background: url("./../../public/arrow_down.svg") right center no-repeat;
+    background-size: contain;
+}
+
+.data_table th.descending {
+    background: url("./../../public/arrow_up.svg") right center no-repeat;
+    background-size: contain;
+}
+
+.data_table th, .data_table td {
+    padding: 0 5px;
+}
+
+.data_table th:not(:last-child), .data_table td:not(:last-child) {
+    border-right: 1px solid var(--text-color);
+}
+
+.data_table tr:hover {
+    background: #e8e8e8;
+}
+
+.data_table tbody:empty {
+    position: relative;
+}
+
+.data_table tbody:empty::after {
+    --state-text: inherit;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    position: absolute;
+    content: 'Нет данных';
+    text-align: center;
+    color: #a9a9a9;
+    font-size: 12pt;
+    padding-top: 5vh;
+}
+
+.data_table tbody.loading:empty::after {
+    content: 'Загрузка...';
+}
+
+.empty {
+    color: #a9a9a9;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2vh 3vw 3px 3vw;
+    position: relative;
+}
+
+.controls > div:first-of-type, .controls > div:last-of-type {
+    padding: 5px;
+    margin: 0;
+    width: 40%;
+}
+
+.controls select {
+    margin-left: 20px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 7px;
+    height: fit-content;
+    transition: var(--fast-transition);
+}
+
+.pages_line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    color: var(--text-color);
+    width: 30vw;
+    left: calc(50% - 15vw);
+    right: calc(50% - 15vw);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.pages_line > div {
+    display: grid;
+    transition: var(--fast-transition);
+    width: max-content;
+}
+
+.pages_line > div > *:nth-child(2n - 1) {
+    pointer-events: all;
+    transition: var(--medium-transition);
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
