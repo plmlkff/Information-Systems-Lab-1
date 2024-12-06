@@ -12,10 +12,16 @@ import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.rest.dto.EntityChangeHistoryDTO;
+import ru.itmo.is_lab1.rest.dto.FileDTO;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
 import ru.itmo.is_lab1.service.EntityChangeHistoryService;
 import ru.itmo.is_lab1.service.MusicBandService;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;
 
@@ -117,5 +123,16 @@ public class MusicBandController {
         } catch (CanNotGetCountException e) {
             return error(e.getMessage());
         }
+    }
+
+    @POST
+    @Path("/fromFile")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCount(@Valid FileDTO queryFilter){
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(queryFilter.getBytes());
+        InputStreamReader inputStreamReader = new InputStreamReader(byteArrayInputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        return ok(bufferedReader.lines().collect(Collectors.joining()));
     }
 }
