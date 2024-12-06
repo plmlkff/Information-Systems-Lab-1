@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import ru.itmo.is_lab1.domain.dao.AbstractDAO;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
+import ru.itmo.is_lab1.interceptor.annotation.Transactional;
 import ru.itmo.is_lab1.util.CriteriaUtil;
 
 import java.util.List;
@@ -29,31 +30,26 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         this.type = type;
     }
 
+    @Transactional
     @Override
     public T save(T entity) throws CanNotSaveEntityException {
-        var trans = session.getTransaction();
         try {
-            trans.begin();
             session.persist(entity);
-            trans.commit();
             return entity;
         } catch (Throwable e) {
-            trans.rollback();
             throw new CanNotSaveEntityException(e.getMessage());
         }
     }
 
+    @Transactional
+    @Override
     public List<T> saveAll(List<T> entities) throws CanNotSaveEntityException{
-        var trans = session.getTransaction();
         try {
-            trans.begin();
             for (var entity : entities){
                 session.persist(entity);
             }
-            trans.commit();
             return entities;
         } catch (Throwable e) {
-            trans.rollback();
             throw new CanNotSaveEntityException(e.getMessage());
         }
     }
@@ -68,15 +64,13 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         }
     }
 
+    @Transactional
     @Override
     public void delete(T entity) throws CanNotDeleteEntityException {
         var trans = session.getTransaction();
         try {
-            trans.begin();
             session.remove(entity);
-            trans.commit();
         } catch (RuntimeException e) {
-            trans.rollback();
             throw new CanNotDeleteEntityException(e.getMessage());
         }
     }

@@ -8,7 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.itmo.is_lab1.interceptor.annotation.Transactional;
 
+import javax.naming.InitialContext;
 import java.sql.Connection;
+import java.sql.Savepoint;
 
 @Transactional
 @Interceptor
@@ -19,19 +21,26 @@ public class TransactionalInterceptor {
     @AroundInvoke
     public Object checkMethod(InvocationContext context) throws Exception {
         int isolationLevel = context.getMethod().getAnnotation(Transactional.class).value();
-        hibernateSession.doWork(connection -> connection.setTransactionIsolation(isolationLevel));
+        boolean isTransactionSource = false;
         Transaction transaction = hibernateSession.getTransaction();
-        try {
+
+        if (!transaction.isActive()){
+            isTransactionSource = true; //  Фиксируем, что это внешний обработчик транзакции
+            hibernateSession.doWork(connection -> connection.setTransactionIsolation(isolationLevel));
             transaction.begin();
-            var result = context.proceed();
-            transaction.commit();
-            return result;
+        }
+
+        try {
+            var res = context.proceed();
+            if (isTransactionSource) transaction.commit();
+            return res;
         } catch (Exception exception){
-            transaction.rollback();
+            if (isTransactionSource) transaction.rollback();
             throw exception;
         }
         finally {
-            hibernateSession.doWork(connection -> connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED));
+            if (isTransactionSource) hibernateSession.doWork(connection -> connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED));
         }
     }
+
 }

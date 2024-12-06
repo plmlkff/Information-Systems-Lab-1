@@ -11,10 +11,12 @@ import ru.itmo.is_lab1.domain.entity.UserRole;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
 import ru.itmo.is_lab1.interceptor.annotation.HistoryLog;
+import ru.itmo.is_lab1.interceptor.annotation.Transactional;
 import ru.itmo.is_lab1.rest.websocket.NotificationWebSocket;
 import ru.itmo.is_lab1.interceptor.annotation.WithWebsocketNotification;
 import ru.itmo.is_lab1.service.MusicBandService;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -79,6 +81,7 @@ public class MusicBandServiceImpl implements MusicBandService {
     }
 
     @Override
+    @Transactional(Connection.TRANSACTION_SERIALIZABLE)
     @WithWebsocketNotification(NotificationWebSocket.class)
     @HistoryLog(operationType = EntityChangeHistory.OperationType.CREATE)
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
