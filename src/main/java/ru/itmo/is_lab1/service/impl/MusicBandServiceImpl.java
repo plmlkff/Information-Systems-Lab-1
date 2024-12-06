@@ -20,6 +20,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class MusicBandServiceImpl implements MusicBandService {
+    public static final int MAX_MUSIC_BANDS_WITH_SAME_COORDINATES_COUNT = 10;
+
     @Inject
     private MusicBandDAO musicBandDAO;
     @Inject
@@ -84,12 +86,18 @@ public class MusicBandServiceImpl implements MusicBandService {
             if (musicBand.getId() != null) throw new CanNotSaveEntityException("Id must be null!");
             User owner = userDAO.findById(ownerLogin);
             if (owner == null) throw new CanNotGetByIdEntityException();
+            if (!checkMusicBandWithSameCoordinatesCount(musicBand)) throw new CanNotSaveEntityException("Count of music bands with this coordinates too big!");
             musicBand.setOwner(owner);
             musicBand.setCreationDate(LocalDate.now());
             return musicBandDAO.save(musicBand);
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotSaveEntityException("User not found!");
         }
+    }
+
+    private boolean checkMusicBandWithSameCoordinatesCount(MusicBand musicBand) throws CanNotSaveEntityException {
+        if (musicBand.getCoordinates() == null) throw new CanNotSaveEntityException("Coordinates must no be null!");
+        return musicBandDAO.getCountByCoordinates(musicBand.getCoordinates()) <= MAX_MUSIC_BANDS_WITH_SAME_COORDINATES_COUNT;
     }
 
     @Override
