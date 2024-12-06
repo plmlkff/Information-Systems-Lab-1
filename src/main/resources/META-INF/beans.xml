@@ -7,5 +7,6 @@
         <class>ru.itmo.is_lab1.interceptor.PrivilegesInterceptor</class>
         <class>ru.itmo.is_lab1.interceptor.WebSocketNotificationsInterceptor</class>
         <class>ru.itmo.is_lab1.interceptor.HistoryInterceptor</class>
+        <class>ru.itmo.is_lab1.interceptor.TransactionalInterceptor</class>
     </interceptors>
 </beans>

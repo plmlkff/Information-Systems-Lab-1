@@ -16,11 +16,13 @@ import ru.itmo.is_lab1.exceptions.service.CanNotAuthUserException;
 import ru.itmo.is_lab1.exceptions.service.CanNotRejectUserSignUpException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSignUpUserException;
 import ru.itmo.is_lab1.exceptions.util.CanNotCreateHashException;
+import ru.itmo.is_lab1.interceptor.annotation.Transactional;
 import ru.itmo.is_lab1.interceptor.annotation.WithPrivileges;
 import ru.itmo.is_lab1.security.service.JWTService;
 import ru.itmo.is_lab1.service.AuthService;
 import ru.itmo.is_lab1.util.SHA512HashUtil;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Set;
 
