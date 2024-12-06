@@ -43,6 +43,21 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         }
     }
 
+    public List<T> saveAll(List<T> entities) throws CanNotSaveEntityException{
+        var trans = session.getTransaction();
+        try {
+            trans.begin();
+            for (var entity : entities){
+                session.persist(entity);
+            }
+            trans.commit();
+            return entities;
+        } catch (Throwable e) {
+            trans.rollback();
+            throw new CanNotSaveEntityException(e.getMessage());
+        }
+    }
+
     @Override
     public T refresh(T entity) throws CanNotRefreshEntityException {
         try {
