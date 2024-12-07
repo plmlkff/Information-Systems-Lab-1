@@ -81,7 +81,7 @@ public class MusicBandServiceImpl implements MusicBandService {
     }
 
     @Override
-    @Transactional
+    @Transactional(Connection.TRANSACTION_SERIALIZABLE)
     @WithWebsocketNotification(NotificationWebSocket.class)
     @HistoryLog(operationType = EntityChangeHistory.OperationType.CREATE)
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
@@ -100,7 +100,7 @@ public class MusicBandServiceImpl implements MusicBandService {
 
     private boolean checkMusicBandWithSameCoordinatesCount(MusicBand musicBand) throws CanNotSaveEntityException {
         if (musicBand.getCoordinates() == null) throw new CanNotSaveEntityException("Coordinates must no be null!");
-        return musicBandDAO.getCountByCoordinates(musicBand.getCoordinates()) <= MAX_MUSIC_BANDS_WITH_SAME_COORDINATES_COUNT;
+        return musicBandDAO.getCountByCoordinates(musicBand.getCoordinates()) < MAX_MUSIC_BANDS_WITH_SAME_COORDINATES_COUNT;
     }
 
     @Override

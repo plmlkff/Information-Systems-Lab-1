@@ -8,9 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.itmo.is_lab1.interceptor.annotation.Transactional;
 
-import javax.naming.InitialContext;
 import java.sql.Connection;
-import java.sql.Savepoint;
 
 @Transactional
 @Interceptor

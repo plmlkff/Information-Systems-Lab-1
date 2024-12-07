@@ -11,12 +11,14 @@ import ru.itmo.is_lab1.service.FileSaverService;
 import ru.itmo.is_lab1.service.MusicBandService;
 import ru.itmo.is_lab1.util.JsonParser;
 
+import java.sql.Connection;
+
 @ApplicationScoped
 public class JsonFileSaverServiceImpl implements FileSaverService {
     @Inject
     private MusicBandService musicBandService;
 
-    @Transactional
+    @Transactional(Connection.TRANSACTION_SERIALIZABLE)
     @WithWebsocketNotification(NotificationWebSocket.class)
     @Override
     public int save(byte[] fileBytes, String ownerLogin) throws CanNotSaveFromFileException {
