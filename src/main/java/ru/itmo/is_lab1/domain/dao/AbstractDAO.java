@@ -8,8 +8,6 @@ import java.util.List;
 public interface AbstractDAO<T, ID> {
     T save(T entity) throws CanNotSaveEntityException;
 
-    List<T> saveAll(List<T> entities) throws CanNotSaveEntityException;
-
     T refresh(T entity) throws CanNotRefreshEntityException;
 
     void delete(T entity) throws CanNotDeleteEntityException;

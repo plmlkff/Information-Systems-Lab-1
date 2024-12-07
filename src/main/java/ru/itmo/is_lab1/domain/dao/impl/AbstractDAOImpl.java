@@ -41,19 +41,6 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
         }
     }
 
-    @Transactional
-    @Override
-    public List<T> saveAll(List<T> entities) throws CanNotSaveEntityException{
-        try {
-            for (var entity : entities){
-                session.persist(entity);
-            }
-            return entities;
-        } catch (Throwable e) {
-            throw new CanNotSaveEntityException(e.getMessage());
-        }
-    }
-
     @Override
     public T refresh(T entity) throws CanNotRefreshEntityException {
         try {
@@ -67,7 +54,6 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     @Transactional
     @Override
     public void delete(T entity) throws CanNotDeleteEntityException {
-        var trans = session.getTransaction();
         try {
             session.remove(entity);
         } catch (RuntimeException e) {

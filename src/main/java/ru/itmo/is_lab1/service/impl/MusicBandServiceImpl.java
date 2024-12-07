@@ -81,7 +81,7 @@ public class MusicBandServiceImpl implements MusicBandService {
     }
 
     @Override
-    @Transactional(Connection.TRANSACTION_SERIALIZABLE)
+    @Transactional
     @WithWebsocketNotification(NotificationWebSocket.class)
     @HistoryLog(operationType = EntityChangeHistory.OperationType.CREATE)
     public MusicBand save(MusicBand musicBand, String ownerLogin) throws CanNotSaveEntityException {
