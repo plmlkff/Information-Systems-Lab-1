@@ -56,7 +56,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     public void delete(T entity) throws CanNotDeleteEntityException {
         try {
             session.remove(entity);
-        } catch (RuntimeException e) {
+        } catch (Throwable e) {
             throw new CanNotDeleteEntityException(e.getMessage());
         }
     }
@@ -65,7 +65,7 @@ public abstract class AbstractDAOImpl<T, ID> implements AbstractDAO<T, ID> {
     public T findById(ID id) throws CanNotGetByIdEntityException {
         try {
             return session.get(type, id);
-        } catch (RuntimeException e) {
+        } catch (Throwable e) {
             throw new CanNotGetByIdEntityException(e.getMessage());
         }
     }

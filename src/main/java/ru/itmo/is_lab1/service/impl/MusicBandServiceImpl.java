@@ -45,6 +45,8 @@ public class MusicBandServiceImpl implements MusicBandService {
             return musicBand.getId();
         } catch (CanNotGetByIdEntityException e) {
             throw new CanNotDeleteEntityException("ID does not exist");
+        } catch (RuntimeException e){
+            throw new CanNotDeleteEntityException("Can not delete entity!");
         }
     }
 
