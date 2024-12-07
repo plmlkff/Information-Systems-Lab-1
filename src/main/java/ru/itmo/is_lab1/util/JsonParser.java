@@ -19,8 +19,8 @@ public class JsonParser {
                 Type personListType = new TypeToken<List<MusicBandDTO>>(){}.getType();
                 return gson.fromJson(reader, personListType);
             }
-        } catch (IOException e) {
-            throw new JsonParserException(e.getMessage());
+        } catch (Exception e) {
+            throw new JsonParserException("Can not parse json file!");
         }
     }
 }

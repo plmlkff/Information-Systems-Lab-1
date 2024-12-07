@@ -10,9 +10,7 @@ import jakarta.ws.rs.core.Response;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
 import ru.itmo.is_lab1.exceptions.domain.*;
-import ru.itmo.is_lab1.exceptions.service.CanNotSaveFromFileException;
 import ru.itmo.is_lab1.rest.dto.EntityChangeHistoryDTO;
-import ru.itmo.is_lab1.rest.dto.FileDTO;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
 import ru.itmo.is_lab1.service.EntityChangeHistoryService;
@@ -27,8 +25,6 @@ public class MusicBandController {
     private MusicBandService musicBandService;
     @Inject
     private EntityChangeHistoryService entityChangeHistoryService;
-    @Inject
-    private FileSaverService fileSaverService;
 
     @POST
     @Path("/")
@@ -119,19 +115,6 @@ public class MusicBandController {
         try{
             return ok(musicBandService.count(queryFilter));
         } catch (CanNotGetCountException e) {
-            return error(e.getMessage());
-        }
-    }
-
-    @POST
-    @Path("/fromFile")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCount(@Valid FileDTO queryFilter, @Context HttpServletRequest request){
-        try {
-            String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
-            return ok(fileSaverService.save(queryFilter.getBytes(), login));
-        } catch (CanNotSaveFromFileException e) {
             return error(e.getMessage());
         }
     }

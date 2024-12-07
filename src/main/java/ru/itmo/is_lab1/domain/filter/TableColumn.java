@@ -33,7 +33,9 @@ public enum TableColumn {
     ENTITY_CHANGE_HISTORY_USER_LOGIN("login"),
     ENTITY_CHANGE_HISTORY_OPERATION("operation"),
     ENTITY_CHANGE_HISTORY_ENTITY_ID("musicBandId"),
-    ENTITY_CHANGE_HISTORY_TIME("time");
+    ENTITY_CHANGE_HISTORY_TIME("time"),
+
+    FILE_UPLOAD_HISTORY_USER_LOGIN("login");
 
     private final String attributeName;
 

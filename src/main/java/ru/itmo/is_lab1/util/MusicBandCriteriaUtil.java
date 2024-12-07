@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.From;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.itmo.is_lab1.domain.entity.EntityChangeHistory;
+import ru.itmo.is_lab1.domain.entity.FileUploadHistory;
 import ru.itmo.is_lab1.domain.entity.MusicBand;
 import ru.itmo.is_lab1.domain.filter.TableColumn;
 import ru.itmo.is_lab1.domain.filter.QueryFilter;
@@ -21,6 +22,8 @@ public class MusicBandCriteriaUtil extends CriteriaUtil{
             case MUSIC_BAND_USER_LOGIN -> rootQuery.join(MusicBand.Fields.OWNER);
 
             case ENTITY_CHANGE_HISTORY_USER_LOGIN -> rootQuery.join(EntityChangeHistory.Fields.USER);
+
+            case FILE_UPLOAD_HISTORY_USER_LOGIN -> rootQuery.join(FileUploadHistory.Fields.USER);
 
             default -> rootQuery;
         };

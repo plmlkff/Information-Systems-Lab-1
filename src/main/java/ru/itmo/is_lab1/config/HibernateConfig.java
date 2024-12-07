@@ -1,10 +1,8 @@
 package ru.itmo.is_lab1.config;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Produces;
-import jakarta.inject.Inject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @ApplicationScoped
-public class HibernateUtils {
+public class HibernateConfig {
     private SessionFactory sessionFactory;
 
     @Produces
@@ -28,7 +26,7 @@ public class HibernateUtils {
     private SessionFactory buildSessionFactory() {
         try {
             Properties properties = new Properties();
-            properties.load(HibernateUtils.class.getClassLoader().getResourceAsStream("/hibernate.cfg.properties"));
+            properties.load(HibernateConfig.class.getClassLoader().getResourceAsStream("/hibernate.cfg.properties"));
             SessionFactory sessionFactory = new Configuration().configure().setProperty(AvailableSettings.USER, properties.getProperty(AvailableSettings.USER))
                     .setProperty(AvailableSettings.PASS, properties.getProperty(AvailableSettings.PASS))
                     .setProperty(AvailableSettings.SHOW_SQL, properties.getProperty(AvailableSettings.SHOW_SQL))
@@ -38,7 +36,8 @@ public class HibernateUtils {
                     .addAnnotatedClass(MusicBand.class)
                     .addAnnotatedClass(Studio.class)
                     .addAnnotatedClass(User.class)
-                    .addAnnotatedClass(EntityChangeHistory.class).buildSessionFactory();
+                    .addAnnotatedClass(EntityChangeHistory.class)
+                    .addAnnotatedClass(FileUploadHistory.class).buildSessionFactory();
             return sessionFactory;
         } catch (IOException ex) {
             System.err.println("Something went wrong");
