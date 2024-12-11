@@ -36,6 +36,7 @@ public class MusicBand {
     @Enumerated(EnumType.STRING)
     private MusicGenre genre; //Поле может быть null
 
+    @Min(1)
     @Column(name = "number_of_participants")
     private Integer numberOfParticipants; //Поле может быть null, Значение поля должно быть больше 0
 
