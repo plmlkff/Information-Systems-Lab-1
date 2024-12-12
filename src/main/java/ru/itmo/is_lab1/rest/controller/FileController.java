@@ -7,14 +7,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ru.itmo.is_lab1.domain.entity.FileUploadHistory;
-import ru.itmo.is_lab1.exceptions.service.CanNotCreateHistoryException;
 import ru.itmo.is_lab1.exceptions.service.CanNotGetHistoryByOwnerLoginException;
+import ru.itmo.is_lab1.exceptions.service.CanNotLoadFileException;
 import ru.itmo.is_lab1.exceptions.service.CanNotSaveFromFileException;
 import ru.itmo.is_lab1.rest.dto.FileDTO;
 import ru.itmo.is_lab1.rest.dto.FileUploadHistoryDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
-import ru.itmo.is_lab1.service.FileSaverService;
+import ru.itmo.is_lab1.service.FileService;
 import ru.itmo.is_lab1.service.FileUploadHistoryService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.error;
@@ -23,7 +22,7 @@ import static ru.itmo.is_lab1.util.HttpResponse.ok;
 @Path("/domain/musicband")
 public class FileController {
     @Inject
-    private FileSaverService fileSaverService;
+    private FileService fileService;
     @Inject
     private FileUploadHistoryService fileUploadHistoryService;
 
@@ -31,17 +30,12 @@ public class FileController {
     @Path("/file")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCount(@Valid FileDTO queryFilter, @Context HttpServletRequest request){
+    public Response uploadFile(@Valid FileDTO fileDTO, @Context HttpServletRequest request){
         String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
         try {
-            var res = fileSaverService.save(queryFilter.getBytes(), login);
-            fileUploadHistoryService.createHistory(login, FileUploadHistory.State.UPLOADED, res);
+            var res = fileService.save(fileDTO, login);
             return ok(res);
-        } catch (CanNotSaveFromFileException | CanNotCreateHistoryException e) {
-            try {
-                fileUploadHistoryService.createHistory(login, FileUploadHistory.State.CANCELED, 0);
-            } catch (CanNotCreateHistoryException ignore){}
-
+        } catch (CanNotSaveFromFileException e) {
             return error(e.getMessage());
         }
     }
@@ -61,6 +55,20 @@ public class FileController {
 
             return ok(historiesDTO);
         } catch (CanNotGetHistoryByOwnerLoginException e) {
+            return error(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/files/{fileName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getFile(@PathParam("fileName") String fileName, @Context HttpServletRequest request){
+        String login = (String)request.getAttribute(JWTFilter.LOGIN_ATTRIBUTE_NAME);
+        try {
+            var res = fileService.load(fileName, login);
+            return ok(res);
+        } catch (CanNotLoadFileException e) {
             return error(e.getMessage());
         }
     }

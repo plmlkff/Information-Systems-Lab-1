@@ -11,11 +11,12 @@ import ru.itmo.is_lab1.rest.dto.FileDTO;
 import ru.itmo.is_lab1.service.FileStorageService;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
 @ApplicationScoped
 public class FileStorageServiceImpl implements FileStorageService {
+    private final int UUID_LENGTH = 36;
+
     @Inject
     private MinioClient minioClient;
 
@@ -28,7 +29,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new CanNotSaveFileException("Ошибка валидации файла!");
         }
 
-        file.setName(makeFileName(file.getName()));
+        file.setName(makeUniqueFileName(file.getName()));
 
         createBucketIfNotExist(minioConfig.getBucket());
 
@@ -45,7 +46,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         try(res){
             byte[] bytes = IOUtils.toByteArray(res);
-            return new FileDTO(fileName, bytes);
+            return new FileDTO(getFileNameFromUnique(fileName), bytes);
         } catch (Exception e){
             throw new CanNotLoadFileException("Ошибка загрузки файла из базы!");
         }
@@ -65,8 +66,14 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
-    private String makeFileName(String currentName){
+    private String makeUniqueFileName(String currentName){
         return currentName + UUID.randomUUID();
+    }
+
+    private String getFileNameFromUnique(String uniqueName) throws CanNotLoadFileException {
+        if (uniqueName.length() <= UUID_LENGTH) throw new CanNotLoadFileException("Ошибка определения имени файла!");
+
+        return uniqueName.substring(0, uniqueName.length() - UUID_LENGTH);
     }
 
     private boolean upload(FileDTO file){

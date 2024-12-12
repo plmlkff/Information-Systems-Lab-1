@@ -30,17 +30,20 @@ public class MusicBandServiceImpl implements MusicBandService {
     private UserDAO userDAO;
 
     @Override
+    @Transactional
     @WithWebsocketNotification(NotificationWebSocket.class)
     @HistoryLog(operationType = EntityChangeHistory.OperationType.DELETE)
     public Integer deleteById(Integer id, String userLogin) throws CanNotDeleteEntityException {
         try {
             MusicBand musicBand = musicBandDAO.findById(id);
             User user = userDAO.findById(userLogin);
+
             if (user == null) throw new CanNotDeleteEntityException("Owner does not exist!");
             if (musicBand == null) throw new CanNotGetByIdEntityException();
             if (user.getRole() != UserRole.ADMIN && !musicBand.getOwner().getLogin().equals(userLogin)) {
                 throw new CanNotDeleteEntityException("Permissions denied!");
             }
+
             musicBandDAO.delete(musicBand);
             return musicBand.getId();
         } catch (CanNotGetByIdEntityException e) {

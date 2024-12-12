@@ -21,12 +21,15 @@ public class FileUploadHistoryDTO {
     @NotNull
     private Integer count;
 
+    private String fileName;
+
     public static FileUploadHistoryDTO fromDomain(FileUploadHistory fileUploadHistory){
         var fileUploadHistoryDTO = new FileUploadHistoryDTO();
         fileUploadHistoryDTO.setLogin(fileUploadHistory.getUser().getLogin());
         fileUploadHistoryDTO.setState(fileUploadHistory.getState());
         fileUploadHistoryDTO.setCount(fileUploadHistory.getCount());
         fileUploadHistoryDTO.setTime(fileUploadHistory.getTime());
+        fileUploadHistoryDTO.setFileName(fileUploadHistory.getFileName());
         return fileUploadHistoryDTO;
     }
 }

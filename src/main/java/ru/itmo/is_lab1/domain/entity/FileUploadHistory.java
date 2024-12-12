@@ -32,8 +32,16 @@ public class FileUploadHistory {
     @NotNull
     private Integer count;
 
+    @Column(name = "file_name", unique = true)
+    private String fileName;
+
     public interface Fields {
         String USER = "user";
+        String FILE_NAME = "fileName";
+    }
+
+    public interface Columns{
+
     }
 
 

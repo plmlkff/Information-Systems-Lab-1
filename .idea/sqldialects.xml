@@ -5,5 +5,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/2_CREATE_ENTITY_CHANGE_HISTORY_TABLE.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/3_CREATE_FUNCTIONS.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/4_CREATE_FILE_UPLOAD_HISTORY_TABLE.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/5_ADD_FILE_NAME_TO_FILE_UPLOAD_HISTORY_TABLE.sql" dialect="PostgreSQL" />
   </component>
 </project>

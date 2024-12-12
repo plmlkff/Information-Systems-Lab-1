@@ -31,7 +31,7 @@ public class FileUploadHistoryServiceImpl implements FileUploadHistoryService {
     private UserDAO userDAO;
 
     @Override
-    public FileUploadHistory createHistory(String ownerLogin, State state, Integer count) throws CanNotCreateHistoryException {
+    public FileUploadHistory createHistory(String ownerLogin, State state, Integer count, String fileName) throws CanNotCreateHistoryException {
         try {
             FileUploadHistory fileUploadHistory = new FileUploadHistory();
 
@@ -42,6 +42,7 @@ public class FileUploadHistoryServiceImpl implements FileUploadHistoryService {
             fileUploadHistory.setState(state);
             fileUploadHistory.setTime(new Date());
             fileUploadHistory.setUser(user);
+            fileUploadHistory.setFileName(fileName);
 
             return fileUploadHistoryDAO.save(fileUploadHistory);
         } catch (CanNotGetByIdEntityException e) {

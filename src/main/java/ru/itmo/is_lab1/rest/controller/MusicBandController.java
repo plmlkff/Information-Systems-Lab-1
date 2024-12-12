@@ -14,7 +14,6 @@ import ru.itmo.is_lab1.rest.dto.EntityChangeHistoryDTO;
 import ru.itmo.is_lab1.rest.dto.MusicBandDTO;
 import ru.itmo.is_lab1.security.filter.JWTFilter;
 import ru.itmo.is_lab1.service.EntityChangeHistoryService;
-import ru.itmo.is_lab1.service.FileSaverService;
 import ru.itmo.is_lab1.service.MusicBandService;
 
 import static ru.itmo.is_lab1.util.HttpResponse.*;

@@ -8,7 +8,7 @@ import ru.itmo.is_lab1.exceptions.service.CanNotGetHistoryByOwnerLoginException;
 import java.util.List;
 
 public interface FileUploadHistoryService {
-    FileUploadHistory createHistory(String ownerLogin, State state, Integer count) throws CanNotCreateHistoryException;
+    FileUploadHistory createHistory(String ownerLogin, State state, Integer count, String fileName) throws CanNotCreateHistoryException;
 
     List<FileUploadHistory> getAllHistoriesByUserLogin(String userLogin, int pageSize, int pageNumber) throws CanNotGetHistoryByOwnerLoginException;
 }
