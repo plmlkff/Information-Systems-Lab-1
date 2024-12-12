@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    networks:
+      - test-network
+    environment:
+      - MINIO_ROOT_USER=minioclient
+      - MINIO_ROOT_PASSWORD=minioclient
+    command: server ~/minio --console-address :9090
+    ports:
+      - '9090:9090'
+      - '9000:9000'
+    volumes:
+      - minio-data:/minio
+
+volumes:
+  minio-data:
+    driver: local
+
+networks:
+  test-network:
+    driver: bridge
