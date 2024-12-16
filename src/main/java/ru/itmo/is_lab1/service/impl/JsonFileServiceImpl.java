@@ -54,7 +54,7 @@ public class JsonFileServiceImpl implements FileService {
             return musicBandDTOs.size();
         } catch (Exception e) {
             try {
-                fileUploadHistoryService.createHistory(ownerLogin, FileUploadHistory.State.UPLOADED, 0, null);
+                fileUploadHistoryService.createHistory(ownerLogin, FileUploadHistory.State.CANCELED, 0, null);
             } catch (CanNotCreateHistoryException ignore) {}
 
             throw new CanNotSaveFromFileException(e.getMessage());
